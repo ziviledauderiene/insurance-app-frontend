@@ -50,6 +50,9 @@
       2,
       { "namedComponents": "arrow-function" }
     ],
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "react/jsx-props-no-spreading": "off"
   }
 }

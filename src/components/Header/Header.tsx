@@ -4,11 +4,16 @@ import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
 interface HeaderProps {
   userIsLogged: boolean;
 }
+const boxStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 const Header = ({ userIsLogged }: HeaderProps): JSX.Element => (
   <AppBar position="static" elevation={0}>
     <Toolbar>
-      <Grid container justifyContent="space-between">
+      <Grid container justifyContent="space-between" height="110px">
         <Grid item>
           <Typography
             variant="h3"
@@ -25,10 +30,8 @@ const Header = ({ userIsLogged }: HeaderProps): JSX.Element => (
         {userIsLogged && (
           <Grid item>
             <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="104px"
+              {...boxStyles}
+              height="110px"
             >
               <Typography variant="h6" color="inherit" mr={5}>
                 Hello, USERNAME!

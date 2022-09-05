@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from 'consts';
 import { Header, LoginForm } from 'components';
 import { CssBaseline } from '@mui/material';
-import "styles/index.scss"
+import 'styles/index.scss';
 
 const App = (): JSX.Element => (
   <CssBaseline>
@@ -14,10 +14,9 @@ const App = (): JSX.Element => (
         <Route path={route} element={<>{route} portal</>} />
       ))}
     </Routes>
-    </CssBaseline>
+  </CssBaseline>
 );
 
 export default App;
 
 // userIsLogged value should come from redux/context later
-

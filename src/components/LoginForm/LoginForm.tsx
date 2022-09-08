@@ -1,11 +1,9 @@
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
 import { TextInput } from 'components';
-import { endpoints } from 'consts';
 import { FormikProps, useFormik } from 'formik';
-import { saveInLocalStorage, sendRequest } from 'helpers';
 import { FormValues, LoginFormNames } from 'interfaces';
-import { useCallback, useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router';
+import { useContext, useState } from 'react';
+import { AuthContext, AuthContextConfig } from 'store';
 import * as Yup from 'yup';
 
 const initialValues: FormValues = {
@@ -23,31 +21,20 @@ const validationSchema = Yup.object().shape({
 
 const LoginForm = (): JSX.Element => {
   const [loginError, setLoginError] = useState<string>('');
-  const navigate: NavigateFunction = useNavigate();
-  const tryToLogin = useCallback(
-    async (values: FormValues) => {
+  const { login } = useContext<AuthContextConfig>(AuthContext);
+
+  const formik: FormikProps<FormValues> = useFormik<FormValues>({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
       try {
-        const { token }: { token: string } = await sendRequest(
-          'post',
-          endpoints.login,
-          values
-        );
-        saveInLocalStorage('token', token);
-        navigate('/admin');
+        await login(values);
       } catch (error) {
+        resetForm({ values: initialValues });
         setLoginError(
           'Your username and/or password is incorrect. Please try again.'
         );
       }
-    },
-    [sendRequest, saveInLocalStorage, navigate]
-  );
-  const formik: FormikProps<FormValues> = useFormik<FormValues>({
-    initialValues,
-    validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      tryToLogin(values);
-      resetForm({ values: initialValues });
     },
   });
 

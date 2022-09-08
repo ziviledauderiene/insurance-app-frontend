@@ -8,5 +8,6 @@ export const routes: [Portals.admin, Portals.employer, Portals.consumer] = [
 ];
 
 export const endpoints: EndpointsConfig = {
-  login: 'api/login'
-}
+  login: 'api/login',
+  validate: 'api/validate',
+};

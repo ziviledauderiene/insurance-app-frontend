@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-boolean-value */
 import { CssBaseline } from '@mui/material';
-import { Header, LoginForm } from 'components';
-import { routes } from 'consts';
+import { AdminPortal, Header, LoginForm } from 'components';
+import { Portals } from 'interfaces';
 import { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { AuthContext, AuthContextConfig } from 'store';
@@ -15,9 +15,7 @@ const App = (): JSX.Element => {
       <Header user={user} />
       <Routes>
         <Route index element={<LoginForm />} />
-        {routes.map((route) => (
-          <Route path={route} element={<>{route} portal</>} />
-        ))}
+        <Route path={Portals.admin} element={<AdminPortal />} />
       </Routes>
     </CssBaseline>
   );

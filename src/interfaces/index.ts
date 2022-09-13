@@ -14,8 +14,14 @@ export interface FormValues {
 export interface EndpointsConfig {
   login: string;
   validate: string;
+  employers: string;
 }
 export interface User {
   username?: string;
   userType?: string;
+}
+export interface Employer {
+  name: string;
+  code: string;
+  id: string;
 }

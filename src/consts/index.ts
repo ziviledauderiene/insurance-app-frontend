@@ -10,4 +10,5 @@ export const routes: [Portals.admin, Portals.employer, Portals.consumer] = [
 export const endpoints: EndpointsConfig = {
   login: 'api/login',
   validate: 'api/validate',
+  employers: 'api/employers',
 };

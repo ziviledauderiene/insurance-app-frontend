@@ -60,7 +60,8 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         const token: string | null = getFromLocalStorage('token');
         if (token) {
           const { tokenIsValid }: { tokenIsValid: boolean } = await sendRequest(
-            endpoints.validate
+            endpoints.validate,
+            'post'
           );
           if (tokenIsValid) {
             const decodedUser: User = getDecodedUser(token);

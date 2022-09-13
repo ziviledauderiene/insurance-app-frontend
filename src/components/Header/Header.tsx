@@ -5,7 +5,6 @@ import { AuthContext, AuthContextConfig } from 'store';
 import { User } from 'interfaces';
 
 interface HeaderProps {
-  // eslint-disable-next-line react/require-default-props
   user?: User;
 }
 const boxStyles = {

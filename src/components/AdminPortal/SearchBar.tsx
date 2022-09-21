@@ -1,6 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, Card, Grid, Typography } from '@mui/material';
-import { SearchInput } from 'components';
+import { BasicModal, EmployerForm, SearchInput } from 'components';
 import { FormikProps, useFormik } from 'formik';
 import { getEmployers } from 'helpers';
 import { Employer, FormValues } from 'interfaces';
@@ -46,6 +46,9 @@ const SearchBar = ({
     <Card variant="outlined" elevation={0} sx={{ mb: '30px' }}>
       <Typography variant="h6" m={3}>
         Search Employers
+      <BasicModal>
+        <EmployerForm />
+      </BasicModal>
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container display="flex" justifyContent="space-around" p={3}>

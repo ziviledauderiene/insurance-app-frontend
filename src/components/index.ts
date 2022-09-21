@@ -7,6 +7,8 @@ import App from './App/App';
 import Header from './Header/Header';
 import LoginForm from './LoginForm/LoginForm';
 import TextInput from './LoginForm/TextInput';
+import EmployerForm from './AddEmployerForm/employerForm';
+import BasicModal from './BasicModal/BasicModal';
 
 export {
   App,
@@ -17,4 +19,6 @@ export {
   EmployersTable,
   SearchBar,
   SearchInput,
+  EmployerForm,
+  BasicModal
 };

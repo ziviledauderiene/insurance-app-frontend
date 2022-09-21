@@ -25,3 +25,13 @@ export interface Employer {
   code: string;
   id: string;
 }
+
+export interface EmployerUser {
+  name: string;
+  code: string;
+  street: string;
+  state: string;
+  city: string;
+  zipCode: string;
+  phone: string;
+}

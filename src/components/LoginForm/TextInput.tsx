@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { TextField } from '@mui/material';
 import { FormikProps } from 'formik';
 import { capitalize } from 'helpers';
@@ -7,18 +8,21 @@ import { ChangeEvent } from 'react';
 interface TextInputProps {
   name: string;
   formik: FormikProps<FormValues>;
-  setLoginError: React.Dispatch<React.SetStateAction<string>>;
+  setLoginError?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TextInput = ({
   name,
   formik,
   setLoginError,
+  
 }: TextInputProps): JSX.Element => {
   const { handleBlur, handleChange, values, touched, errors } = formik;
   const changeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     handleChange(event);
-    setLoginError('');
+    if (setLoginError){
+      setLoginError('')
+    }
   };
 
   return (

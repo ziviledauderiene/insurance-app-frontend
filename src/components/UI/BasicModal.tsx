@@ -2,11 +2,11 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
-type Props = {
+interface BasicModalProps {
   children: JSX.Element
 }
 
-const BasicModal = ({children}: Props): JSX.Element => {
+const BasicModal = ({children}: BasicModalProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => setIsOpen(!isOpen);
 

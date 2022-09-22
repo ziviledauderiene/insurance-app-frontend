@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { endpoints } from 'consts';
-import { Employer, FormValues, EmployerUser} from 'interfaces';
+import { Employer, FormValues } from 'interfaces';
 import sendRequest from './sendRequest';
 
 export const getEmployers = async (
@@ -13,7 +13,18 @@ export const getEmployers = async (
   return employers;
 };
 
-export const createEmployer = async (postdata: FormValues): Promise<EmployerUser> => {
-  const { employerUser } = await sendRequest(endpoints.employers, 'POST', postdata);
+export const createEmployer = async (
+  postdata: FormValues
+): Promise<Employer> => {
+  const { employerUser } = await sendRequest(
+    endpoints.employers,
+    'POST',
+    postdata
+  );
   return employerUser;
-}
+};
+
+export const getEmployer = async (id: string): Promise<Employer> => {
+  const { employer } = await sendRequest(`${endpoints.employers}/${id}`);
+  return employer;
+};

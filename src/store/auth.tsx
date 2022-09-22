@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { endpoints } from 'consts';
 import {
   deleteFromLocalStorage,
   getFromLocalStorage,
   saveInLocalStorage,
-  sendRequest,
+  sendRequest
 } from 'helpers';
-import { createContext, useEffect, useMemo, useState } from 'react';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import { endpoints } from 'consts';
-import { NavigateFunction, useNavigate } from 'react-router';
 import { FormValues, User } from 'interfaces';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { createContext, useEffect, useMemo, useState } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -51,7 +51,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     saveInLocalStorage('token', token);
     const decodedUser: User = getDecodedUser(token);
     setUser(decodedUser);
-    navigate(`/${decodedUser.userType || 'admin'}`); // change later
+    navigate(`/${decodedUser.userType || '/'}`);
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           if (tokenIsValid) {
             const decodedUser: User = getDecodedUser(token);
             setUser(decodedUser);
-            navigate(`/${decodedUser.userType || 'admin'}`); // change later
+            navigate(`/${decodedUser.userType || '/'}`);
           }
         } else {
           navigate('/');

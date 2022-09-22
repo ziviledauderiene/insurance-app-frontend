@@ -1,8 +1,8 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
+import { User } from 'interfaces';
 import { useContext } from 'react';
 import { AuthContext, AuthContextConfig } from 'store';
-import { User } from 'interfaces';
 
 interface HeaderProps {
   user?: User;

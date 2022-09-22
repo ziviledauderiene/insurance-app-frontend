@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
-import { Container, Card, Grid, Button } from '@mui/material';
+import { Container, Card, Grid, Button, Typography } from '@mui/material';
 import TextInput from 'components/LoginForm/TextInput';
 import { FormValues } from 'interfaces';
 import { createEmployer } from 'helpers/api';
+import { Prompt } from 'components';
 
 const initialValues: FormValues = {
   name: '',
@@ -36,18 +37,22 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const EmployerForm = () => {
+const AddEmployerForm = (): JSX.Element => {
   const formik = useFormik({
     initialValues,
     onSubmit,
     validate,
   });
-  const { handleSubmit } = formik;
+  const { handleSubmit, dirty } = formik;
   return (
     <Container>
+      <Prompt formIsDirty={dirty} />
       <form onSubmit={handleSubmit}>
         <Card variant="outlined">
           <Grid container rowSpacing={2} direction="column" p={10}>
+            <Grid item>
+              <Typography variant="h6">Add new Employer</Typography>
+            </Grid>
             {Object.keys(initialValues).map((key) => (
               <Grid item>
                 <TextInput name={key} formik={formik} />
@@ -70,4 +75,4 @@ const EmployerForm = () => {
   );
 };
 
-export default EmployerForm;
+export default AddEmployerForm;

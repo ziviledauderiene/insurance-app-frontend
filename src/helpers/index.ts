@@ -1,4 +1,4 @@
-import { getEmployers } from './api';
+import { getEmployer, getEmployers } from './api';
 import {
   deleteFromLocalStorage,
   getFromLocalStorage,
@@ -14,4 +14,5 @@ export {
   getFromLocalStorage,
   saveInLocalStorage,
   capitalize,
+  getEmployer
 };

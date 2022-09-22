@@ -4,6 +4,13 @@ export enum Portals {
   employer = 'employer',
   consumer = 'consumer',
 }
+export enum AdminPages {
+  setup = 'setup',
+  profile = 'profile',
+  users = 'users',
+  rules = 'rules',
+  plans = 'plans',
+}
 export enum LoginFormNames {
   username = 'username',
   password = 'password',
@@ -23,15 +30,10 @@ export interface User {
 export interface Employer {
   name: string;
   code: string;
-  id: string;
-}
-
-export interface EmployerUser {
-  name: string;
-  code: string;
   street: string;
   state: string;
   city: string;
   zipCode: string;
   phone: string;
+  id: string;
 }

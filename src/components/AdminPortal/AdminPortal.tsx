@@ -3,6 +3,7 @@ import { EmployersTable, SearchBar } from 'components';
 import { getEmployers } from 'helpers';
 import { Employer } from 'interfaces';
 import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const AdminPortal = (): JSX.Element => {
   const [employersList, setEmployersList] = useState<Employer[]>([]);
@@ -38,6 +39,7 @@ const AdminPortal = (): JSX.Element => {
         loading={loading}
         error={error}
       />
+      <Outlet />
     </Container>
   );
 };

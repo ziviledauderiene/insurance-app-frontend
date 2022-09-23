@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Container, Card, Grid, Button, Typography } from '@mui/material';
+import { Container, Card, Grid, Button } from '@mui/material';
 import TextInput from 'components/LoginForm/TextInput';
 import { FormValues } from 'interfaces';
 import { createEmployer } from 'helpers/api';
@@ -50,12 +50,9 @@ const AddEmployerForm = (): JSX.Element => {
       <form onSubmit={handleSubmit}>
         <Card variant="outlined">
           <Grid container rowSpacing={2} direction="column" p={10}>
-            <Grid item>
-              <Typography variant="h6">Add new Employer</Typography>
-            </Grid>
-            {Object.keys(initialValues).map((key) => (
-              <Grid item>
-                <TextInput name={key} formik={formik} />
+            {Object.keys(initialValues).map((value) => (
+              <Grid item key={value}>
+                <TextInput name={value} formik={formik} />
               </Grid>
             ))}
             <Grid item mt={2}>

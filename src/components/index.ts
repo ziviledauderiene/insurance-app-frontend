@@ -8,6 +8,9 @@ import App from './App/App';
 import Header from './Header/Header';
 import LoginForm from './LoginForm/LoginForm';
 import TextInput from './LoginForm/TextInput';
+import BasicTabs from './UI/BasicTab';
+import TabPanel from './UI/TabPanel';
+import EmployerHome from './AdminPortal/EmployerHome/EmployerHome';
 import BasicModal from './UI/BasicModal';
 import Prompt from './UI/Prompt';
 import EmployerSetup from "./AdminPortal/EmployerSetup"
@@ -24,6 +27,9 @@ export {
   SearchInput,
   EmployerForm,
   BasicModal,
+  BasicTabs,
+  TabPanel,
+  EmployerHome,
   Prompt,
   EmployerSetup,
   EmployerHeader

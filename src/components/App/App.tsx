@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-boolean-value */
 import { CssBaseline } from '@mui/material';
 import { AdminPortal, EmployerSetup, Header, LoginForm } from 'components';
 import { Portals } from 'interfaces';

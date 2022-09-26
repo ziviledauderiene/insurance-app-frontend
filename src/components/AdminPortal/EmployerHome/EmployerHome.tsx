@@ -1,4 +1,9 @@
-import { EmployersTable, SearchBar } from 'components';
+import {
+  AddEmployerForm,
+  BasicModal,
+  EmployersTable,
+  SearchBar,
+} from 'components';
 import { getEmployers } from 'helpers';
 import { Employer } from 'interfaces';
 import { useEffect, useState } from 'react';
@@ -24,6 +29,9 @@ const EmployerHome = (): JSX.Element => {
 
   return (
     <>
+      <BasicModal label="Add new Employer">
+        <AddEmployerForm />
+      </BasicModal>
       <SearchBar
         setEmployersList={setEmployersList}
         setLoading={setLoading}
@@ -38,4 +46,4 @@ const EmployerHome = (): JSX.Element => {
   );
 };
 
-export default EmployerHome
+export default EmployerHome;

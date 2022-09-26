@@ -1,11 +1,20 @@
-import { getEmployer, getEmployers } from './api';
+import {
+  getEmployer,
+  getEmployers,
+  createEmployer,
+  createEmployerUser,
+  updateEmployerUser,
+  deleteUser,
+  getUser,
+} from './api';
+import generatePassword from './generatePassword';
 import {
   deleteFromLocalStorage,
   getFromLocalStorage,
-  saveInLocalStorage
+  saveInLocalStorage,
 } from './localStorage';
 import sendRequest from './sendRequest';
-import { capitalize } from './strings';
+import capitalize from './strings';
 
 export {
   sendRequest,
@@ -14,5 +23,11 @@ export {
   getFromLocalStorage,
   saveInLocalStorage,
   capitalize,
-  getEmployer
+  getEmployer,
+  createEmployer,
+  createEmployerUser,
+  updateEmployerUser,
+  generatePassword,
+  deleteUser,
+  getUser,
 };

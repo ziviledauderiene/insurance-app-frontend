@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import { TextField } from '@mui/material';
 import { FormikProps } from 'formik';
 import { capitalize } from 'helpers';
@@ -8,20 +7,19 @@ import { ChangeEvent } from 'react';
 interface TextInputProps {
   name: string;
   formik: FormikProps<FormValues>;
-  setLoginError?: React.Dispatch<React.SetStateAction<string>>;
+  setFormError?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TextInput = ({
   name,
   formik,
-  setLoginError,
-  
+  setFormError,
 }: TextInputProps): JSX.Element => {
   const { handleBlur, handleChange, values, touched, errors } = formik;
   const changeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     handleChange(event);
-    if (setLoginError){
-      setLoginError('')
+    if (setFormError) {
+      setFormError('');
     }
   };
 
@@ -40,6 +38,10 @@ const TextInput = ({
       type={name === 'password' ? 'password' : 'text'}
     />
   );
+};
+
+TextInput.defaultProps = {
+  setFormError: undefined,
 };
 
 export default TextInput;

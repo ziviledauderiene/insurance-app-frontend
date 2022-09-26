@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import { Button, Card, Grid, Typography } from '@mui/material';
 import { getEmployer } from 'helpers';
 import { Portals } from 'interfaces';
@@ -10,7 +9,7 @@ const EmployerHeader = (): JSX.Element => {
   const [employerName, setEmployerName] = useState<string>('');
 
   useEffect(() => {
-    employerId &&
+    if (employerId) {
       (async () => {
         try {
           const { name, code } = await getEmployer(employerId);
@@ -20,6 +19,7 @@ const EmployerHeader = (): JSX.Element => {
           console.error(error);
         }
       })();
+    }
   }, []);
 
   return (

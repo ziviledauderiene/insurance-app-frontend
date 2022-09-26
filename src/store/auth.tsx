@@ -6,7 +6,7 @@ import {
   saveInLocalStorage,
   sendRequest
 } from 'helpers';
-import { FormValues, User } from 'interfaces';
+import { FormValues, User, UserTypes } from 'interfaces';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
@@ -16,13 +16,12 @@ interface AuthProviderProps {
 }
 export interface AuthContextConfig {
   user?: User;
-  // eslint-disable-next-line no-unused-vars
   login: (values: FormValues) => Promise<void>;
   logout: () => void;
 }
 interface DecodedJwt extends JwtPayload {
   username?: string;
-  userType?: string;
+  userType?: UserTypes;
 }
 const getDecodedUser = (token: string): User => {
   const { username, userType }: DecodedJwt = jwtDecode(token);

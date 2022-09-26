@@ -55,7 +55,8 @@
     "@typescript-eslint/no-shadow": ["error"],
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "warn",
-    "react/require-default-props": "warn"
-
+    "react/require-default-props": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"]
   }
 }

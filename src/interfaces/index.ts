@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export enum Portals {
   admin = 'admin',
   employer = 'employer',
@@ -11,21 +10,38 @@ export enum AdminPages {
   rules = 'rules',
   plans = 'plans',
 }
-export enum LoginFormNames {
+export enum UserTypes {
+  admin = 'admin',
+  employer = 'employer',
+  consumer = 'consumer',
+}
+export enum FormNames {
+  firstName = 'firstName',
+  lastName = 'lastName',
+  email = 'email',
   username = 'username',
   password = 'password',
 }
 export interface FormValues {
   [name: string]: string;
 }
+export enum FormActions {
+  addUser,
+  updateUser,
+}
 export interface EndpointsConfig {
   login: string;
   validate: string;
   employers: string;
+  users: string;
 }
 export interface User {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   username?: string;
-  userType?: string;
+  password?: string;
+  userType?: UserTypes;
 }
 export interface Employer {
   name: string;

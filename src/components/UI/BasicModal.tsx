@@ -3,24 +3,31 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
 interface BasicModalProps {
-  children: JSX.Element
+  children: JSX.Element;
+  label: string;
 }
 
-const BasicModal = ({children}: BasicModalProps): JSX.Element => {
+const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <div>
-      <Button onClick={handleClick}>Add new employer</Button>
-      {isOpen && <Modal
-      open={isOpen}
-        onClose={handleClick}
+    <>
+      <Button
+        onClick={handleClick}
+        color="secondary"
+        variant="contained"
+        sx={{ m: '30px' }}
       >
-      {children}
-      </Modal>}
-    </div>
+        {label}
+      </Button>
+      {isOpen && (
+        <Modal open={isOpen} onClose={handleClick}>
+          {children}
+        </Modal>
+      )}
+    </>
   );
-}
+};
 
-export default BasicModal
+export default BasicModal;

@@ -1,9 +1,8 @@
+import { Button, Card, Container, Grid, Typography } from '@mui/material';
+import { Prompt, TextInput } from 'components';
 import { useFormik } from 'formik';
-import { Container, Card, Grid, Button } from '@mui/material';
-import TextInput from 'components/LoginForm/TextInput';
+import { createEmployer } from 'helpers';
 import { FormValues } from 'interfaces';
-import { createEmployer } from 'helpers/api';
-import { Prompt } from 'components';
 
 const initialValues: FormValues = {
   name: '',
@@ -49,6 +48,9 @@ const AddEmployerForm = (): JSX.Element => {
       <Prompt formIsDirty={dirty} />
       <form onSubmit={handleSubmit}>
         <Card variant="outlined">
+          <Typography variant="h6" ml={10} mt={5} mb={-5}>
+            Add new Employer
+          </Typography>
           <Grid container rowSpacing={2} direction="column" p={10}>
             {Object.keys(initialValues).map((value) => (
               <Grid item key={value}>

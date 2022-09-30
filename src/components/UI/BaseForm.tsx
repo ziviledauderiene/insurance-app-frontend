@@ -39,7 +39,7 @@ const BaseForm = ({
     onSubmit,
   });
 
-  const { dirty, handleSubmit, setFieldValue, setValues } = formik;
+  const { dirty, handleSubmit, setFieldValue, setValues, isValid } = formik;
 
   useEffect(() => {
     if (prefillValues) {
@@ -72,7 +72,7 @@ const BaseForm = ({
                 color="secondary"
                 size="small"
                 sx={{ textTransform: 'none' }}
-                onClick={clickHandler}
+                onMouseDown={clickHandler}
               >
                 Generate password
               </Button>
@@ -84,6 +84,7 @@ const BaseForm = ({
               variant="contained"
               type="submit"
               fullWidth
+              disabled={!(isValid && dirty)}
             >
               {buttonName}
             </Button>

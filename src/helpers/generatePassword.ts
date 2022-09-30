@@ -4,9 +4,9 @@ const generatePassword = (length: number): string => {
   let password = '';
   const array = new Uint32Array(length);
   window.crypto.getRandomValues(array);
-  for (let i = 0; i < length; i+1) {
-    password += chars[array[i] % chars.length];
-  }
+  array.forEach((_char, index) => {
+    password += chars[array[index] % chars.length];
+  });
   return password;
 };
 

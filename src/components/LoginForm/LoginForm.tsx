@@ -56,6 +56,7 @@ const LoginForm = (): JSX.Element => {
             addPrompt={false}
             setFormError={setFormError}
             generatePasswordButton={false}
+            buttonName="Log In"
           />
         </Card>
       </Box>

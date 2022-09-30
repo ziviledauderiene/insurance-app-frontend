@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -27,6 +26,8 @@ const BasicTabs = ({ tabLabels, tabComponents }: BasicTapProps) => {
         </Tabs>
       </Box>
       {tabComponents.map((component, index) => (
+        // index won't change.
+        // eslint-disable-next-line react/no-array-index-key
         <TabPanel value={tabValue} index={index} key={index}>
           {component}
         </TabPanel>

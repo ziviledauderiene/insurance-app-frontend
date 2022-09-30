@@ -1,4 +1,4 @@
-import { Button, Card, Container, Grid, Typography } from '@mui/material';
+import { Button, Container, Grid, Typography } from '@mui/material';
 import { Prompt, TextInput } from 'components';
 import { useFormik } from 'formik';
 import { createEmployer } from 'helpers';
@@ -42,33 +42,32 @@ const AddEmployerForm = (): JSX.Element => {
     onSubmit,
     validate,
   });
-  const { handleSubmit, dirty } = formik;
+  const { handleSubmit, dirty, isValid } = formik;
   return (
     <Container>
       <Prompt formIsDirty={dirty} />
       <form onSubmit={handleSubmit}>
-        <Card variant="outlined">
-          <Typography variant="h6" ml={10} mt={5} mb={-5}>
-            Add new Employer
-          </Typography>
-          <Grid container rowSpacing={2} direction="column" p={10}>
-            {Object.keys(initialValues).map((value) => (
-              <Grid item key={value}>
-                <TextInput name={value} formik={formik} />
-              </Grid>
-            ))}
-            <Grid item mt={2}>
-              <Button
-                color="secondary"
-                variant="contained"
-                type="submit"
-                fullWidth
-              >
-                Submit
-              </Button>
+        <Typography variant="h6" ml={10} mt={5} mb={-5}>
+          Add new Employer
+        </Typography>
+        <Grid container rowSpacing={2} direction="column" p={10}>
+          {Object.keys(initialValues).map((value) => (
+            <Grid item key={value}>
+              <TextInput name={value} formik={formik} />
             </Grid>
+          ))}
+          <Grid item mt={2}>
+            <Button
+              color="secondary"
+              variant="contained"
+              type="submit"
+              fullWidth
+              disabled={!(isValid && dirty)}
+            >
+              Submit
+            </Button>
           </Grid>
-        </Card>
+        </Grid>
       </form>
     </Container>
   );

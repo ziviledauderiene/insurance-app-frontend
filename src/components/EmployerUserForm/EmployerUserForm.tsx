@@ -1,10 +1,11 @@
-import { Card, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
+import { AxiosError } from 'axios';
 import { BaseForm } from 'components';
 import { emailRegEx } from 'consts';
 import { FormikHelpers } from 'formik';
 import { createEmployerUser, getUser, updateEmployerUser } from 'helpers';
 import { FormActions, FormNames, FormValues, UserTypes } from 'interfaces';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -13,13 +14,6 @@ interface EmployerUserFormProps {
   userId?: string;
 }
 
-const fieldNames: FormNames[] = [
-  FormNames.firstName,
-  FormNames.lastName,
-  FormNames.email,
-  FormNames.username,
-  FormNames.password,
-];
 const initialValues: FormValues = {
   [FormNames.firstName]: '',
   [FormNames.lastName]: '',
@@ -51,6 +45,25 @@ const EmployerUserForm = ({
     undefined
   );
 
+  const fieldNames: FormNames[] = useMemo(
+    () =>
+      action === FormActions.addUser
+        ? [
+            FormNames.firstName,
+            FormNames.lastName,
+            FormNames.email,
+            FormNames.username,
+            FormNames.password,
+          ]
+        : [
+            FormNames.firstName,
+            FormNames.lastName,
+            FormNames.email,
+            FormNames.username,
+          ],
+    [action]
+  );
+
   useEffect(() => {
     if (userId) {
       (async () => {
@@ -67,7 +80,7 @@ const EmployerUserForm = ({
 
   const onSubmit = async (
     values: FormValues,
-    { resetForm }: FormikHelpers<FormValues>
+    { resetForm, setFieldError }: FormikHelpers<FormValues>
   ): Promise<void> => {
     try {
       const data = employerId && {
@@ -91,9 +104,17 @@ const EmployerUserForm = ({
           action === FormActions.addUser ? 'created' : 'updated'
         } successfully`
       );
-    } catch (error: any) {
-      if (error.response.status === 400) {
+    } catch (error: unknown) {
+      if (
+        error instanceof AxiosError &&
+        error.response &&
+        error.response.status === 400
+      ) {
         setFormError(
+          `Username "${values.username}" already exists. Please choose a different one.`
+        );
+        setFieldError(
+          FormNames.username,
           `Username "${values.username}" already exists. Please choose a different one.`
         );
       }
@@ -101,27 +122,25 @@ const EmployerUserForm = ({
   };
   return (
     <Container>
-      <Card variant="outlined">
-        <Typography
-          color={formError ? 'error' : 'success'}
-          align="center"
-          mt={10}
-        >
-          {formError || formMessage}
-        </Typography>
-        <Typography variant="h6" ml={10} mt={5} mb={-5}>
-          {action === FormActions.addUser ? 'Add new' : 'Update'} User
-        </Typography>
-        <BaseForm
-          onSubmit={onSubmit}
-          initialValues={initialValues}
-          prefillValues={formValues}
-          validationSchema={validationSchema}
-          fieldNames={fieldNames}
-          addPrompt
-          generatePasswordButton
-        />
-      </Card>
+      <Typography
+        color={formMessage ? 'success' : 'error'}
+        align="center"
+        mt={10}
+      >
+        {formMessage || formError}
+      </Typography>
+      <Typography variant="h6" ml={10} mt={5} mb={-5}>
+        {action === FormActions.addUser ? 'Add new' : 'Update'} User
+      </Typography>
+      <BaseForm
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+        prefillValues={formValues}
+        validationSchema={validationSchema}
+        fieldNames={fieldNames}
+        addPrompt
+        generatePasswordButton={action === FormActions.addUser}
+      />
     </Container>
   );
 };

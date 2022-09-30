@@ -1,6 +1,6 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { Button, Card, Container, Modal } from '@mui/material';
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 
 interface BasicModalProps {
   children: JSX.Element;
@@ -8,13 +8,13 @@ interface BasicModalProps {
 }
 
 const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const handleClose = () => setIsOpen(!isOpen);
 
   return (
     <>
       <Button
-        onClick={handleClick}
+        onClick={handleClose}
         color="secondary"
         variant="contained"
         sx={{ m: '30px' }}
@@ -22,8 +22,20 @@ const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {
         {label}
       </Button>
       {isOpen && (
-        <Modal open={isOpen} onClose={handleClick}>
-          {children}
+        <Modal open={isOpen} onClose={handleClose}>
+          <Container>
+            <Card>
+              <Button
+                onClick={handleClose}
+                variant="text"
+                sx={{ float: 'right', m: '10px' }}
+              >
+                Close
+                <CloseIcon />
+              </Button>
+              {children}
+            </Card>
+          </Container>
         </Modal>
       )}
     </>

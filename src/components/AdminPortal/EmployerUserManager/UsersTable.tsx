@@ -8,11 +8,10 @@ import {
   TableRow,
   Container,
   IconButton,
+  Dialog,
+  DialogActions,
+  DialogTitle
 } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-
-import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MouseEvent, useState } from 'react';
 import Edit from '@mui/icons-material/Edit';

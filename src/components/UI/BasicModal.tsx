@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface BasicModalProps {
   children: JSX.Element;
-  label: string;
+  label: string | JSX.Element;
 }
 
 const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {

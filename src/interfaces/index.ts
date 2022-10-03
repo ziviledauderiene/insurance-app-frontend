@@ -42,6 +42,7 @@ export interface User {
   username?: string;
   password?: string;
   userType?: UserTypes;
+  id?: string
 }
 export interface Employer {
   name: string;

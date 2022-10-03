@@ -24,6 +24,14 @@ export const getEmployer = async (id: string): Promise<Employer> => {
   return employer;
 };
 
+export const getUsersByEmployer = async (id: string): Promise<User[]> => {
+  const query = id ? `?employer=${id}` : ``;
+
+  const { users } = await sendRequest(`${endpoints.users}${query}`);
+
+  return users;
+};
+
 export const createEmployerUser = async (data: FormValues): Promise<User> => {
   const { newUser } = await sendRequest(endpoints.users, 'POST', data);
   return newUser;

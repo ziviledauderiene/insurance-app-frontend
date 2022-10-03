@@ -10,7 +10,7 @@ export const endpoints: EndpointsConfig = {
   login: 'api/login',
   validate: 'api/validate',
   employers: 'api/employers',
-  users: 'api/users',
+  users: 'api/users'
 };
 
 export const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

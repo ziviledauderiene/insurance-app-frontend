@@ -1,16 +1,27 @@
-import { Container, Typography } from '@mui/material';
-import { BasicTabs, EmployerHome } from 'components';
+import { Container } from '@mui/material';
+import { BasicTabs, EmployerHeader, EmployerHome } from 'components';
+import { Outlet, useParams } from 'react-router';
 
-const AdminPortal = (): JSX.Element => (
-  <Container>
-    <Typography variant="h5" my={5}>
-      Home
-    </Typography>
-    <BasicTabs
-      tabLabels={['Employer', 'Claims']}
-      tabComponents={[<EmployerHome />, <>Claims placeholder</>]}
-    />
-  </Container>
+const OutletWithHeader = (): JSX.Element => (
+  <>
+    <EmployerHeader />
+    <Outlet />
+  </>
 );
+
+const AdminPortal = (): JSX.Element => {
+  const { employerId } = useParams();
+  return (
+    <Container>
+      <BasicTabs
+        tabLabels={['Employer', 'Claims']}
+        tabComponents={[
+          !employerId ? <EmployerHome /> : <OutletWithHeader />,
+          <>Claims Placeholder</>,
+        ]}
+      />
+    </Container>
+  );
+};
 
 export default AdminPortal;

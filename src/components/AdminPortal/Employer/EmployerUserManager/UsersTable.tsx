@@ -1,25 +1,23 @@
+import { Delete, Edit } from '@mui/icons-material';
 import {
+  Button,
   Card,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Container,
-  IconButton,
-  Dialog,
-  DialogActions,
-  DialogTitle
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { BasicModal, EmployerUserForm } from 'components';
+import { deleteUser } from 'helpers';
+import { FormActions, User } from 'interfaces';
 import { MouseEvent, useState } from 'react';
-import Edit from '@mui/icons-material/Edit';
-import { deleteUser } from 'helpers/api';
-import { User } from 'interfaces';
-
-import theme from 'styles';
-import Button from '@mui/material/Button';
 
 interface EmployersUserProps {
   employersUsersList: User[];
@@ -36,18 +34,12 @@ const headCellStyles = {
   },
 };
 const bodyCellStyles = {
-  sx: { paddingLeft: '50px', '&:hover': { fontWeight: '700' } },
+  sx: { paddingLeft: '50px' },
 };
 const rowStyles = {
   sx: {
     '&:last-child td, &:last-child th': { border: 0 },
-    '&:hover': { cursor: 'pointer', background: theme.palette.action.hover },
   },
-};
-
-const deleteHandler = async (event: MouseEvent<HTMLElement>) => {
-  const { id } = event.target as HTMLElement;
-  await deleteUser(id);
 };
 
 const headerTitles = ['Actions', 'First Name', 'Last Name', 'Email'];
@@ -62,11 +54,11 @@ const UsersTable = ({
 }: EmployersUserProps): JSX.Element => {
   const [dialogIsOpen, setDialogOpen] = useState(false);
 
-  const handleDialogOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
+  const deleteHandler = async (event: MouseEvent<HTMLElement>) => {
+    const { id } = event.target as HTMLElement;
+    await deleteUser(id);
     setDialogOpen(false);
   };
 
@@ -98,42 +90,36 @@ const UsersTable = ({
                 employersUsersList.map((user) => (
                   <TableRow key={user.id} {...rowStyles}>
                     <TableCell>
-                      <IconButton color="primary">
-                        <Edit />
-                      </IconButton>
+                      <BasicModal label={<Edit />}>
+                        <EmployerUserForm
+                          action={FormActions.updateUser}
+                          userId={user.id}
+                        />
+                      </BasicModal>
                       <IconButton color="error" onClick={handleDialogOpen}>
-                        <DeleteIcon />
+                        <Delete />
                       </IconButton>
                       <Dialog open={dialogIsOpen} onClose={handleDialogClose}>
-                        <DialogTitle>Are you sure?</DialogTitle>
+                        <DialogTitle>
+                          Are you sure to delete this User?
+                        </DialogTitle>
                         <DialogActions>
                           <Button
                             color="error"
-                            variant="contained"
                             id={user.id}
                             onClick={deleteHandler}
                           >
                             Delete
                           </Button>
-                          <Button
-                            color="primary"
-                            variant="outlined"
-                            onClick={handleDialogClose}
-                          >
-                            Cancel
-                          </Button>
+                          <Button onClick={handleDialogClose}>Cancel</Button>
                         </DialogActions>
                       </Dialog>
                     </TableCell>
-                    <TableCell {...bodyCellStyles} width="60%" id={user.id}>
+                    <TableCell {...bodyCellStyles} id={user.id}>
                       {user.firstName}
                     </TableCell>
-                    <TableCell {...bodyCellStyles} width="40%">
-                      {user.lastName}
-                    </TableCell>
-                    <TableCell {...bodyCellStyles} width="40%">
-                      {user.email}
-                    </TableCell>
+                    <TableCell {...bodyCellStyles}>{user.lastName}</TableCell>
+                    <TableCell {...bodyCellStyles}>{user.email}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

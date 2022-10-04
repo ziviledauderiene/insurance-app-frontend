@@ -51,7 +51,6 @@ const BaseForm = ({
     const newPassword: string = generatePassword(8);
     setFieldValue(FormNames.password, newPassword);
   };
-
   return (
     <>
       {addPrompt && <Prompt formIsDirty={dirty} />}

@@ -1,17 +1,14 @@
 import {
-  getEmployer,
-  getEmployers,
   createEmployer,
-  createEmployerUser,
-  updateEmployerUser,
-  deleteUser,
-  getUser,
+  createEmployerUser, deleteUser, getEmployer,
+  getEmployers, getUser,
+  getUsersByEmployer, updateEmployerUser
 } from './api';
 import generatePassword from './generatePassword';
 import {
   deleteFromLocalStorage,
   getFromLocalStorage,
-  saveInLocalStorage,
+  saveInLocalStorage
 } from './localStorage';
 import sendRequest from './sendRequest';
 import capitalize from './strings';
@@ -30,4 +27,6 @@ export {
   generatePassword,
   deleteUser,
   getUser,
+  getUsersByEmployer,
 };
+

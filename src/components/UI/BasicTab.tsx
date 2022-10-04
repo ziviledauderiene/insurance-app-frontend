@@ -17,7 +17,7 @@ const BasicTabs = ({ tabLabels, tabComponents }: BasicTapProps) => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', mt: "30px" }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabValue} onChange={handleChange}>
           {tabLabels.map((label) => (

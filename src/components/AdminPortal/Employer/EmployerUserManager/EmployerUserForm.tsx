@@ -5,7 +5,7 @@ import { emailRegEx } from 'consts';
 import { FormikHelpers } from 'formik';
 import { createEmployerUser, getUser, updateEmployerUser } from 'helpers';
 import { FormActions, FormNames, FormValues, UserTypes } from 'interfaces';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -13,7 +13,6 @@ interface EmployerUserFormProps {
   action: FormActions;
   userId?: string;
 }
-
 const initialValues: FormValues = {
   [FormNames.firstName]: '',
   [FormNames.lastName]: '',
@@ -21,7 +20,29 @@ const initialValues: FormValues = {
   [FormNames.username]: '',
   [FormNames.password]: '',
 };
-const validationSchema = Yup.object().shape({
+const updateUserFields: FormNames[] = [
+  FormNames.firstName,
+  FormNames.lastName,
+  FormNames.email,
+  FormNames.username,
+];
+const addUserFields = [
+  FormNames.firstName,
+  FormNames.lastName,
+  FormNames.email,
+  FormNames.username,
+  FormNames.password,
+];
+const updateUserValidation = Yup.object().shape({
+  [FormNames.firstName]: Yup.string().required('Please enter the First Name'),
+  [FormNames.lastName]: Yup.string().required('Please enter the Last Name'),
+  [FormNames.email]: Yup.string()
+    .required('Please enter the email')
+    .matches(emailRegEx, 'Please check the email'),
+
+  [FormNames.username]: Yup.string().required('Please enter the username'),
+});
+const addUserValidation = Yup.object().shape({
   [FormNames.firstName]: Yup.string().required('Please enter the First Name'),
   [FormNames.lastName]: Yup.string().required('Please enter the Last Name'),
   [FormNames.email]: Yup.string()
@@ -33,7 +54,6 @@ const validationSchema = Yup.object().shape({
     .required('Please enter the password')
     .min(3, 'Password is too short. At least 3 chars required'),
 });
-
 const EmployerUserForm = ({
   action,
   userId,
@@ -45,24 +65,10 @@ const EmployerUserForm = ({
     undefined
   );
 
-  const fieldNames: FormNames[] = useMemo(
-    () =>
-      action === FormActions.addUser
-        ? [
-            FormNames.firstName,
-            FormNames.lastName,
-            FormNames.email,
-            FormNames.username,
-            FormNames.password,
-          ]
-        : [
-            FormNames.firstName,
-            FormNames.lastName,
-            FormNames.email,
-            FormNames.username,
-          ],
-    [action]
-  );
+  const fieldNames =
+    action === FormActions.addUser ? addUserFields : updateUserFields;
+  const validationSchema =
+    action === FormActions.addUser ? addUserValidation : updateUserValidation;
 
   useEffect(() => {
     if (userId) {

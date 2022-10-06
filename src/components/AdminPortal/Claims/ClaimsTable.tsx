@@ -48,7 +48,7 @@ const ClaimsTable = ({
     'Status'
   ];
   const headerList = headerTitles.map((title) => (
-    <TableCell {...headCellStyles}>{title}</TableCell>
+    <TableCell {...headCellStyles} key={title}>{title}</TableCell>
   ));
 
   return (

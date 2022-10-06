@@ -13,11 +13,15 @@ import App from './App/App';
 import Header from './Header/Header';
 import LoginForm from './LoginForm/LoginForm';
 import BaseForm from './UI/BaseForm';
+import ClaimsTable from './AdminPortal/Claims/ClaimsTable';
+import ClaimsHome from './AdminPortal/Claims/ClaimsHome';
 import BasicModal from './UI/BasicModal';
 import BasicTabs from './UI/BasicTab';
 import Prompt from './UI/Prompt';
 import TabPanel from './UI/TabPanel';
 import TextInput from './UI/TextInput';
+import ClaimSearch from './AdminPortal/Claims/ClaimSearch/ClaimSearch'
+import BasicSelect from './UI/BasicSelect';
 
 export {
   App,
@@ -38,6 +42,10 @@ export {
   EmployerHeader,
   EmployerUserForm,
   BaseForm,
+  ClaimsTable,
+  ClaimsHome,
   UsersTable,
   EmployerUsersManager,
+  ClaimSearch,
+  BasicSelect
 };

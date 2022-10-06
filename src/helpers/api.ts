@@ -1,5 +1,5 @@
 import { endpoints } from 'consts';
-import { Employer, FormValues, User } from 'interfaces';
+import { Claim, Employer, FormValues, User } from 'interfaces';
 import sendRequest from './sendRequest';
 
 export const getEmployers = async (
@@ -56,4 +56,14 @@ export const deleteUser = async (id: string) => {
 export const getUser = async (id: string): Promise<User> => {
   const { user } = await sendRequest(`${endpoints.users}/${id}`);
   return user[0];
+};
+
+export const getClaims = async (
+  queryParams?: FormValues
+): Promise<Claim[]> => {
+  const query = queryParams
+    ? `?claimNumber=${queryParams.claimNumber}&status=${queryParams.status}`
+    : '';
+  const { claims } = await sendRequest(`${endpoints.claims}${query}`);
+  return claims;
 };

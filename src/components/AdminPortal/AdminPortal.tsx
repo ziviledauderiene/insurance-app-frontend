@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { BasicTabs, EmployerHeader, EmployerHome } from 'components';
+import { BasicTabs, EmployerHeader, EmployerHome, ClaimsHome } from 'components';
 import { Outlet, useParams } from 'react-router';
 
 const OutletWithHeader = (): JSX.Element => (
@@ -17,7 +17,7 @@ const AdminPortal = (): JSX.Element => {
         tabLabels={['Employer', 'Claims']}
         tabComponents={[
           !employerId ? <EmployerHome /> : <OutletWithHeader />,
-          <>Claims Placeholder</>,
+          <ClaimsHome />,
         ]}
       />
     </Container>

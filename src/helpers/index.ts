@@ -2,7 +2,7 @@ import {
   createEmployer,
   createEmployerUser, deleteUser, getEmployer,
   getEmployers, getUser,
-  getUsersByEmployer, updateEmployerUser
+  getUsersByEmployer, updateEmployerUser, getClaims
 } from './api';
 import generatePassword from './generatePassword';
 import {
@@ -28,5 +28,6 @@ export {
   deleteUser,
   getUser,
   getUsersByEmployer,
+  getClaims
 };
 

@@ -34,6 +34,7 @@ export interface EndpointsConfig {
   validate: string;
   employers: string;
   users: string;
+  claims: string
 }
 export interface User {
   firstName?: string;
@@ -53,4 +54,13 @@ export interface Employer {
   zipCode: string;
   phone: string;
   id: string;
+}
+
+export interface Claim {
+  claimNumber: string;
+  amount: string;
+  consumer: string
+  date: string
+  plan: string
+  status: string
 }

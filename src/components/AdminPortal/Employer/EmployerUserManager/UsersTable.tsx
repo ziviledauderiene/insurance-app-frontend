@@ -44,7 +44,7 @@ const rowStyles = {
 
 const headerTitles = ['Actions', 'First Name', 'Last Name', 'Email'];
 const headerList = headerTitles.map((title) => (
-  <TableCell {...headCellStyles}>{title}</TableCell>
+  <TableCell {...headCellStyles} key={title}>{title}</TableCell>
 ));
 
 const UsersTable = ({

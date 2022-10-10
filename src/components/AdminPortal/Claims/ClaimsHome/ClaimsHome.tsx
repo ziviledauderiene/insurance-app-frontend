@@ -1,7 +1,7 @@
 import { ClaimSearch, ClaimsTable } from 'components';
 import { getClaims } from 'helpers/api';
 import { Claim } from 'interfaces';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const ClaimsHome = (): JSX.Element => {
   const [claimsList, setClaimsList] = useState<Claim[]>([]);
@@ -24,13 +24,12 @@ const ClaimsHome = (): JSX.Element => {
 
   return (
     <>
-    <ClaimSearch
-      setClaimsList={setClaimsList}
-      setLoading={setLoading}
-      setError={setError} />
-      
+      <ClaimSearch
+        setClaimsList={setClaimsList}
+        setLoading={setLoading}
+        setError={setError} />
       <ClaimsTable claimList={claimsList} loading={loading} error={error} />
-      </>
+    </>
   );
 };
 

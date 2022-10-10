@@ -41,7 +41,7 @@ const SearchBar = ({
   });
   const { handleSubmit } = formik;
 
-  const selectValues = ['approved', 'pending', 'declined'];
+  const selectValues = ['approved', 'pending', 'denied'];
   const listMenu = selectValues.map((selectItem) => (
     <MenuItem value={selectItem} key={selectItem}>
       {capitalize(selectItem)}

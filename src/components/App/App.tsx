@@ -5,6 +5,9 @@ import {
   Header,
   LoginForm,
   EmployerUsersManager,
+  EditClaim,
+  ClaimsHome,
+  EmployerHome,
 } from 'components';
 import { Portals } from 'interfaces';
 import { useContext } from 'react';
@@ -21,11 +24,14 @@ const App = (): JSX.Element => {
       <Routes>
         <Route index element={<LoginForm />} />
         <Route path={Portals.admin} element={<AdminPortal />}>
+          <Route path="employers" element={<EmployerHome />} />
           <Route path="employers/:employerId" element={<EmployerSetup />} />
           <Route
             path="employers/:employerId/users"
             element={<EmployerUsersManager />}
           />
+          <Route path="claims" element={<ClaimsHome />} />
+          <Route path="claims/:claimNumber" element={<EditClaim />} />
         </Route>
       </Routes>
     </CssBaseline>

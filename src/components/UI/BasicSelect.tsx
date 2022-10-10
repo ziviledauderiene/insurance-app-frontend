@@ -1,14 +1,14 @@
-import { Select, SelectChangeEvent, InputLabel, FormControl } from '@mui/material';
-import { FormValues } from 'interfaces';
+import { FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { FormikProps } from 'formik';
 import { capitalize } from 'helpers';
+import { StrictFormValues } from 'interfaces';
 import { Dispatch, SetStateAction } from 'react';
 
 interface BasicSelectProps {
   name: string;
-  formik: FormikProps<FormValues>;
+  formik: FormikProps<StrictFormValues>;
   children: JSX.Element[];
-  setDisableButton: Dispatch<SetStateAction<boolean>>;
+  setDisableButton?: Dispatch<SetStateAction<boolean>>;
 }
 
 const BasicSelect = ({
@@ -17,17 +17,21 @@ const BasicSelect = ({
   children,
   setDisableButton,
 }: BasicSelectProps): JSX.Element => {
-  const { handleChange } = formik;
+  const { handleChange, values } = formik;
+  const selectValue = values[name];
 
   return (
     <FormControl fullWidth>
       <InputLabel id="selectBoxName">{capitalize(name)}</InputLabel>
       <Select
+        labelId="selectBoxName"
         name={name}
+        value={selectValue}
         label={capitalize(name)}
-        id="selectBoxName"
-        onChange={(event: SelectChangeEvent<HTMLSelectElement>) => {
-          setDisableButton(false);
+        onChange={(event: SelectChangeEvent<typeof selectValue>) => {
+          if (setDisableButton) {
+            setDisableButton(false);
+          }
           handleChange(event);
         }}
       >
@@ -35,6 +39,10 @@ const BasicSelect = ({
       </Select>
     </FormControl>
   );
+};
+
+BasicSelect.defaultProps = {
+  setDisableButton: undefined,
 };
 
 export default BasicSelect;

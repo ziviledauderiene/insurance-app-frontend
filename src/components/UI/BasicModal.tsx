@@ -12,19 +12,17 @@ const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {
   const handleClose = () => setIsOpen(!isOpen);
 
   const buttonStyles: {
+    color?: 'secondary';
     variant: 'contained' | 'text' | 'outlined';
     sx?: { m: string };
   } =
     typeof label === 'string'
-      ? {
-          variant: 'contained',
-          sx: { m: '30px' },
-        }
+      ? { color: 'secondary', variant: 'contained', sx: { m: '30px' } }
       : { variant: 'text' };
 
   return (
     <>
-      <Button onClick={handleClose} color="secondary" {...buttonStyles}>
+      <Button onClick={handleClose} {...buttonStyles}>
         {label}
       </Button>
       {isOpen && (

@@ -1,8 +1,13 @@
 import {
   createEmployer,
-  createEmployerUser, deleteUser, getEmployer,
-  getEmployers, getUser,
-  getUsersByEmployer, updateEmployerUser, getClaims
+  createEmployerUser,
+  deleteUser,
+  getClaim, getClaims, getEmployer,
+  getEmployers,
+  getUser,
+  getUsersByEmployer,
+  updateClaim,
+  updateEmployerUser
 } from './api';
 import generatePassword from './generatePassword';
 import {
@@ -11,7 +16,7 @@ import {
   saveInLocalStorage
 } from './localStorage';
 import sendRequest from './sendRequest';
-import capitalize from './strings';
+import { capitalize, checkIfOnlyNumbers } from './strings';
 
 export {
   sendRequest,
@@ -28,6 +33,8 @@ export {
   deleteUser,
   getUser,
   getUsersByEmployer,
-  getClaims
+  getClaim,
+  updateClaim,
+  checkIfOnlyNumbers,
+  getClaims,
 };
-

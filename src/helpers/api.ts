@@ -58,6 +58,23 @@ export const getUser = async (id: string): Promise<User> => {
   return user[0];
 };
 
+export const getClaim = async (claimNumber: string): Promise<Claim> => {
+  const query = `?claimNumber=${claimNumber}`;
+  const { claims } = await sendRequest(`${endpoints.claims}${query}`);
+  return claims[0];
+};
+
+export const updateClaim = async (
+  id: string,
+  data: Partial<Claim>
+): Promise<Claim> => {
+  const { claim } = await sendRequest(
+    `${endpoints.claims}/${id}`,
+    'PATCH',
+    data
+  );
+  return claim;
+};
 export const getClaims = async (
   queryParams?: FormValues
 ): Promise<Claim[]> => {

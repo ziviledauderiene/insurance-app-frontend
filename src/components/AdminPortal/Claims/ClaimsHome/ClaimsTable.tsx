@@ -7,7 +7,8 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { Claim } from 'interfaces';
+import { Claim, ClaimStatus, Portals } from 'interfaces';
+import { NavigateFunction, useNavigate } from 'react-router';
 import theme from 'styles';
 
 interface ClaimsTableProps {
@@ -24,13 +25,13 @@ const headCellStyles = {
     borderBottom: '2px solid',
   },
 };
-const bodyCellStyles = {
-  sx: { paddingLeft: '50px', '&:hover': { fontWeight: '700' } },
-};
+const bodyCellStyles = (status: ClaimStatus) => (status === ClaimStatus.pending) ? { sx: { paddingLeft: '50px', '&:hover': { fontWeight: '700', cursor: 'pointer', } } }
+  : { sx: { paddingLeft: '50px' } }
+
 const rowStyles = {
   sx: {
     '&:last-child td, &:last-child th': { border: 0 },
-    '&:hover': { cursor: 'pointer', background: theme.palette.action.hover },
+    '&:hover': { background: theme.palette.action.hover },
   },
 };
 
@@ -39,6 +40,7 @@ const ClaimsTable = ({
   loading,
   error,
 }: ClaimsTableProps): JSX.Element => {
+  const navigate: NavigateFunction = useNavigate();
   const headerTitles = [
     'Claim Number',
     'Amount',
@@ -50,6 +52,7 @@ const ClaimsTable = ({
   const headerList = headerTitles.map((title) => (
     <TableCell {...headCellStyles} key={title}>{title}</TableCell>
   ));
+  const clickHandler = (claimNumber: string) => navigate(`/${Portals.admin}/claims/${claimNumber}`);
 
   return (
     <Card elevation={0} variant="outlined">
@@ -78,7 +81,7 @@ const ClaimsTable = ({
               claimList.map((claim) => (
                 <TableRow key={claim.claimNumber} {...rowStyles}>
                   {Object.values(claim).slice(0, -1).map((claimItem) => (
-                    <TableCell key={claimItem} {...bodyCellStyles}>{claimItem}</TableCell>
+                    <TableCell key={claimItem} {...bodyCellStyles(claim.status)} onClick={() => { if (claim.status === ClaimStatus.pending) { clickHandler(claim.claimNumber) } }}>{claimItem}</TableCell>
                   ))}
                 </TableRow>
               ))
@@ -86,7 +89,7 @@ const ClaimsTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-    </Card>
+    </Card >
   );
 };
 

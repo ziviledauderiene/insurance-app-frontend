@@ -1,4 +1,11 @@
 import AdminPortal from './AdminPortal/AdminPortal';
+import ClaimSearch from './AdminPortal/Claims/ClaimsHome/ClaimSearch';
+import ClaimsHome from './AdminPortal/Claims/ClaimsHome/ClaimsHome';
+import ClaimsTable from './AdminPortal/Claims/ClaimsHome/ClaimsTable';
+import ClaimData from './AdminPortal/Claims/EditClaim/ClaimData';
+import ConfirmDialog from './AdminPortal/Claims/EditClaim/ConfirmDialog';
+import EditClaim from './AdminPortal/Claims/EditClaim/EditClaim';
+import EditClaimForm from './AdminPortal/Claims/EditClaim/EditClaimForm';
 import EmployerHeader from './AdminPortal/Employer/EmployerHeader';
 import AddEmployerForm from './AdminPortal/Employer/EmployerHome/AddEmployerForm';
 import EmployerHome from './AdminPortal/Employer/EmployerHome/EmployerHome';
@@ -13,15 +20,13 @@ import App from './App/App';
 import Header from './Header/Header';
 import LoginForm from './LoginForm/LoginForm';
 import BaseForm from './UI/BaseForm';
-import ClaimsTable from './AdminPortal/Claims/ClaimsTable';
-import ClaimsHome from './AdminPortal/Claims/ClaimsHome';
+import BasicDatePicker from './UI/BasicDatePicker';
 import BasicModal from './UI/BasicModal';
+import BasicSelect from './UI/BasicSelect';
 import BasicTabs from './UI/BasicTab';
 import Prompt from './UI/Prompt';
 import TabPanel from './UI/TabPanel';
 import TextInput from './UI/TextInput';
-import ClaimSearch from './AdminPortal/Claims/ClaimSearch/ClaimSearch'
-import BasicSelect from './UI/BasicSelect';
 
 export {
   App,
@@ -42,10 +47,15 @@ export {
   EmployerHeader,
   EmployerUserForm,
   BaseForm,
-  ClaimsTable,
-  ClaimsHome,
   UsersTable,
   EmployerUsersManager,
+  EditClaim,
+  BasicDatePicker,
+  EditClaimForm,
+  ConfirmDialog,
+  BasicSelect,
+  ClaimData,
+  ClaimsTable,
+  ClaimsHome,
   ClaimSearch,
-  BasicSelect
 };

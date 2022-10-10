@@ -55,7 +55,7 @@ const SearchBar = ({
               setDisableButton={setDisableButton}
             />
           </Grid>
-          <Grid item width="30%">
+          <Grid item width="40%">
             <SearchInput
               formik={formik}
               name="code"

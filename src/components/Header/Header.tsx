@@ -2,6 +2,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
 import { User } from 'interfaces';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext, AuthContextConfig } from 'store';
 
 interface HeaderProps {
@@ -30,7 +31,12 @@ const Header = ({ user }: HeaderProps): JSX.Element => {
                 letterSpacing: '5px',
               }}
             >
-              Insurance app
+              <Link
+                to={user?.userType || '/'}
+                style={{ textDecoration: 'none', color: 'white' }}
+              >
+                Insurance app
+              </Link>
             </Typography>
           </Grid>
           {user && (
@@ -63,6 +69,10 @@ const Header = ({ user }: HeaderProps): JSX.Element => {
       </Toolbar>
     </AppBar>
   );
+};
+
+Header.defaultProps = {
+  user: undefined,
 };
 
 export default Header;

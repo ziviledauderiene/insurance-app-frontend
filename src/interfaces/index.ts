@@ -34,7 +34,7 @@ export interface EndpointsConfig {
   validate: string;
   employers: string;
   users: string;
-  claims: string
+  claims: string;
 }
 export interface User {
   firstName?: string;
@@ -43,7 +43,7 @@ export interface User {
   username?: string;
   password?: string;
   userType?: UserTypes;
-  id?: string
+  id?: string;
 }
 export interface Employer {
   name: string;
@@ -55,12 +55,36 @@ export interface Employer {
   phone: string;
   id: string;
 }
-
-export interface Claim {
-  claimNumber: string;
-  amount: string;
-  consumer: string
-  date: string
-  plan: string
-  status: string
+export enum Plan {
+  dental = 'dental',
+  medical = 'medical',
 }
+export enum ClaimStatus {
+  pending = 'pending',
+  approved = 'approved',
+  denied = 'denied',
+}
+export interface Claim {
+  id: string;
+  claimNumber: string;
+  employer: string;
+  consumer: string;
+  date: string;
+  plan: Plan;
+  amount: string;
+  status: ClaimStatus;
+}
+export enum DialogAction {
+  approve = 'approve',
+  deny = 'deny',
+}
+export type StrictFormValues = FormValues & { plan?: Plan };
+
+// export interface Claim {
+//   claimNumber: string;
+//   amount: string;
+//   consumer: string
+//   date: string
+//   plan: string
+//   status: string
+// }

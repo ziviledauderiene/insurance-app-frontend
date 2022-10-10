@@ -3,6 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { TabPanel } from 'components';
+import { Link } from 'react-router-dom';
+import { Portals } from 'interfaces';
 
 interface BasicTapProps {
   tabLabels: string[];
@@ -21,7 +23,7 @@ const BasicTabs = ({ tabLabels, tabComponents }: BasicTapProps) => {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabValue} onChange={handleChange}>
           {tabLabels.map((label) => (
-            <Tab label={label} key={label} />
+            <Tab label={label} key={label} component={Link} to={`/${Portals.admin}/${label}`} />
           ))}
         </Tabs>
       </Box>

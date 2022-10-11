@@ -1,10 +1,21 @@
 import { Edit } from '@mui/icons-material';
 import { Box, Button, Card, Container, Typography } from '@mui/material';
-import { BasicModal, ConfirmDialog, EditClaimForm, ClaimData } from 'components';
+import {
+  BasicModal,
+  ConfirmDialog,
+  EditClaimForm,
+  ClaimData,
+} from 'components';
 import { getClaim, updateClaim } from 'helpers';
-import { Claim, ClaimStatus, DialogAction } from 'interfaces';
+import {
+  AdminPages,
+  Claim,
+  ClaimStatus,
+  DialogAction,
+  Portals,
+} from 'interfaces';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { NavigateFunction, useNavigate, useParams } from 'react-router';
 
 const buttonStyles: {
   variant: 'contained';
@@ -26,7 +37,8 @@ const EditClaim = (): JSX.Element => {
   const [dialogAction, setDialogAction] = useState<DialogAction | undefined>(
     undefined
   );
-  const { claimNumber } = useParams()
+  const { claimNumber } = useParams();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     if (claimNumber) {
@@ -60,7 +72,7 @@ const EditClaim = (): JSX.Element => {
         });
         setDialogAction(undefined);
         setDialogOpen(false);
-        // navigate back to claims list
+        navigate(`/${Portals.admin}/${AdminPages.claims}`);
       } catch (error) {
         console.error(error);
       }

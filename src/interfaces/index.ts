@@ -9,6 +9,7 @@ export enum AdminPages {
   users = 'users',
   rules = 'rules',
   plans = 'plans',
+  claims = "claims"
 }
 export enum UserTypes {
   admin = 'admin',
@@ -26,8 +27,8 @@ export interface FormValues {
   [name: string]: string;
 }
 export enum FormActions {
-  addUser,
-  updateUser,
+  add,
+  update,
 }
 export interface EndpointsConfig {
   login: string;
@@ -79,12 +80,3 @@ export enum DialogAction {
   deny = 'deny',
 }
 export type StrictFormValues = FormValues & { plan?: Plan };
-
-// export interface Claim {
-//   claimNumber: string;
-//   amount: string;
-//   consumer: string
-//   date: string
-//   plan: string
-//   status: string
-// }

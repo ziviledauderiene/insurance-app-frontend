@@ -92,7 +92,7 @@ const UsersTable = ({
                     <TableCell>
                       <BasicModal label={<Edit />}>
                         <EmployerUserForm
-                          action={FormActions.updateUser}
+                          action={FormActions.update}
                           userId={user.id}
                         />
                       </BasicModal>

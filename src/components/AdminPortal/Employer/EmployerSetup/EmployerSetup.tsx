@@ -1,9 +1,10 @@
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
-import { AdminPages, Portals } from 'interfaces';
+import { AddEmployerForm } from 'components';
+import BasicModal from 'components/UI/BasicModal';
+import { AdminPages, FormActions, Portals } from 'interfaces';
 import { Link } from 'react-router-dom';
 
 const buttons = [
-  { link: `${AdminPages.profile}`, label: 'Manage Profile' },
   { link: `${AdminPages.users}`, label: 'Manage Users' },
   { link: `${AdminPages.rules}`, label: 'Manage Rules' },
 ];
@@ -15,6 +16,11 @@ const EmployerSetup = (): JSX.Element => (
         <Grid container direction="column" m={5}>
           <Grid item key="Employer Setup" mb={2}>
             <Typography variant="h6">Employer Setup</Typography>
+          </Grid>
+          <Grid item key="profile">
+            <BasicModal label={<>Manage Profile</>}>
+              <AddEmployerForm action={FormActions.update} />
+            </BasicModal>
           </Grid>
           {buttons.map(({ link, label }) => (
             <Grid item key={label}>

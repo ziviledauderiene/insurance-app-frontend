@@ -4,11 +4,12 @@ import {
   BasicSelect,
   ClaimData,
   Prompt,
-  TextInput
+  TextInput,
 } from 'components';
 import { FormikProps, useFormik } from 'formik';
 import { checkIfOnlyNumbers, updateClaim } from 'helpers';
 import { Claim, Plan, StrictFormValues } from 'interfaces';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 interface EditClaimFormProps {
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
+  const [formMessage, setFormMessage] = useState<string>('');
   const initialValues: StrictFormValues = {
     date: claim.date,
     plan: claim.plan,
@@ -35,6 +37,7 @@ const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
   const onSubmit = async (values: StrictFormValues) => {
     try {
       await updateClaim(claim.id, values);
+      setFormMessage(`Claim updated successfully`);
     } catch (error) {
       console.error(error);
     }
@@ -50,6 +53,9 @@ const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
     <>
       <Prompt formIsDirty={dirty} />
       <Grid container rowSpacing={2} direction="column" pl={10}>
+        <Typography align="center" mb={3}>
+          {formMessage}
+        </Typography>
         <Grid item mb={3}>
           <Typography variant="h6">
             <b>Claim number:</b> {claim.claimNumber}

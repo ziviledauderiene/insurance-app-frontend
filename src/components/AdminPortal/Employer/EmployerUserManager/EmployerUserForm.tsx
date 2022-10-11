@@ -66,9 +66,9 @@ const EmployerUserForm = ({
   );
 
   const fieldNames =
-    action === FormActions.addUser ? addUserFields : updateUserFields;
+    action === FormActions.add ? addUserFields : updateUserFields;
   const validationSchema =
-    action === FormActions.addUser ? addUserValidation : updateUserValidation;
+    action === FormActions.add ? addUserValidation : updateUserValidation;
 
   useEffect(() => {
     if (userId) {
@@ -94,12 +94,12 @@ const EmployerUserForm = ({
         employer: employerId,
         userType: UserTypes.employer,
       };
-      if (action === FormActions.addUser) {
+      if (action === FormActions.add) {
         if (data) {
           await createEmployerUser(data);
         }
       }
-      if (action === FormActions.updateUser) {
+      if (action === FormActions.update) {
         if (data && userId) {
           await updateEmployerUser(values, userId);
         }
@@ -107,7 +107,7 @@ const EmployerUserForm = ({
       resetForm(initialValues);
       setFormMessage(
         `User "${values.username}" ${
-          action === FormActions.addUser ? 'created' : 'updated'
+          action === FormActions.add ? 'created' : 'updated'
         } successfully`
       );
     } catch (error: unknown) {
@@ -136,7 +136,7 @@ const EmployerUserForm = ({
         {formMessage || formError}
       </Typography>
       <Typography variant="h6" ml={10} mt={5} mb={-5}>
-        {action === FormActions.addUser ? 'Add new' : 'Update'} User
+        {action === FormActions.add ? 'Add new' : 'Update'} User
       </Typography>
       <BaseForm
         onSubmit={onSubmit}
@@ -145,7 +145,7 @@ const EmployerUserForm = ({
         validationSchema={validationSchema}
         fieldNames={fieldNames}
         addPrompt
-        generatePasswordButton={action === FormActions.addUser}
+        generatePasswordButton={action === FormActions.add}
       />
     </Container>
   );

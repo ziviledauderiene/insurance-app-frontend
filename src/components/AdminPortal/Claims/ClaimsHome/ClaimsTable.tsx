@@ -25,8 +25,15 @@ const headCellStyles = {
     borderBottom: '2px solid',
   },
 };
-const bodyCellStyles = (status: ClaimStatus) => (status === ClaimStatus.pending) ? { sx: { paddingLeft: '50px', '&:hover': { fontWeight: '700', cursor: 'pointer', } } }
-  : { sx: { paddingLeft: '50px' } }
+const bodyCellStyles = (status: ClaimStatus) =>
+  status === ClaimStatus.pending
+    ? {
+        sx: {
+          paddingLeft: '50px',
+          '&:hover': { fontWeight: '700', cursor: 'pointer' },
+        },
+      }
+    : { sx: { paddingLeft: '50px' } };
 
 const rowStyles = {
   sx: {
@@ -47,12 +54,15 @@ const ClaimsTable = ({
     'Consumer',
     'Date of Service',
     'Plan',
-    'Status'
+    'Status',
   ];
   const headerList = headerTitles.map((title) => (
-    <TableCell {...headCellStyles} key={title}>{title}</TableCell>
+    <TableCell {...headCellStyles} key={title}>
+      {title}
+    </TableCell>
   ));
-  const clickHandler = (claimNumber: string) => navigate(`/${Portals.admin}/claims/${claimNumber}`);
+  const clickHandler = (claimNumber: string) =>
+    navigate(`/${Portals.admin}/claims/${claimNumber}`);
 
   return (
     <Card elevation={0} variant="outlined">
@@ -80,16 +90,27 @@ const ClaimsTable = ({
             {claimList.length > 0 &&
               claimList.map((claim) => (
                 <TableRow key={claim.claimNumber} {...rowStyles}>
-                  {Object.values(claim).slice(0, -1).map((claimItem) => (
-                    <TableCell key={claimItem} {...bodyCellStyles(claim.status)} onClick={() => { if (claim.status === ClaimStatus.pending) { clickHandler(claim.claimNumber) } }}>{claimItem}</TableCell>
-                  ))}
+                  {Object.values(claim)
+                    .slice(0, -1)
+                    .map((claimItem) => (
+                      <TableCell
+                        key={claimItem}
+                        {...bodyCellStyles(claim.status)}
+                        onClick={() => {
+                          if (claim.status === ClaimStatus.pending) {
+                            clickHandler(claim.claimNumber);
+                          }
+                        }}
+                      >
+                        {claimItem}
+                      </TableCell>
+                    ))}
                 </TableRow>
-              ))
-            }
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </Card >
+    </Card>
   );
 };
 

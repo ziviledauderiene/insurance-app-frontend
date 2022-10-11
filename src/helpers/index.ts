@@ -7,6 +7,7 @@ import {
   getUser,
   getUsersByEmployer,
   updateClaim,
+  updateEmployer,
   updateEmployerUser
 } from './api';
 import generatePassword from './generatePassword';
@@ -37,4 +38,5 @@ export {
   updateClaim,
   checkIfOnlyNumbers,
   getClaims,
+  updateEmployer
 };

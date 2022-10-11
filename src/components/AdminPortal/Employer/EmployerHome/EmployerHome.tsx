@@ -5,7 +5,7 @@ import {
   SearchBar,
 } from 'components';
 import { getEmployers } from 'helpers';
-import { Employer } from 'interfaces';
+import { Employer, FormActions } from 'interfaces';
 import { useEffect, useState } from 'react';
 
 const EmployerHome = (): JSX.Element => {
@@ -30,7 +30,7 @@ const EmployerHome = (): JSX.Element => {
   return (
     <>
       <BasicModal label="Add new Employer">
-        <AddEmployerForm />
+        <AddEmployerForm action={FormActions.add}/>
       </BasicModal>
       <SearchBar
         setEmployersList={setEmployersList}

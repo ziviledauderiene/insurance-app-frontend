@@ -30,7 +30,7 @@ const EmployerUsersManager = (): JSX.Element => {
   return (
     <Container>
       <BasicModal label="Add new User">
-        <EmployerUserForm action={FormActions.addUser} />
+        <EmployerUserForm action={FormActions.add} />
       </BasicModal>
       <UsersTable
         employersUsersList={usersList}

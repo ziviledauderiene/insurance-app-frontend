@@ -19,6 +19,11 @@ export const createEmployer = async (
   return employer;
 };
 
+export const updateEmployer = async (values: FormValues, id: string): Promise<Employer> => {
+  const { employer } = await sendRequest(`${endpoints.employers}/${id}`, "PATCH", values);
+  return employer
+}
+
 export const getEmployer = async (id: string): Promise<Employer> => {
   const { employer } = await sendRequest(`${endpoints.employers}/${id}`);
   return employer;
@@ -26,9 +31,7 @@ export const getEmployer = async (id: string): Promise<Employer> => {
 
 export const getUsersByEmployer = async (id: string): Promise<User[]> => {
   const query = id ? `?employer=${id}` : ``;
-
   const { users } = await sendRequest(`${endpoints.users}${query}`);
-
   return users;
 };
 

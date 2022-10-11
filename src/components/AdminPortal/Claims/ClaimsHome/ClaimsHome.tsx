@@ -27,7 +27,8 @@ const ClaimsHome = (): JSX.Element => {
       <ClaimSearch
         setClaimsList={setClaimsList}
         setLoading={setLoading}
-        setError={setError} />
+        setError={setError}
+      />
       <ClaimsTable claimList={claimsList} loading={loading} error={error} />
     </>
   );

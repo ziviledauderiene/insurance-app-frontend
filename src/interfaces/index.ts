@@ -9,7 +9,7 @@ export enum AdminPages {
   users = 'users',
   rules = 'rules',
   plans = 'plans',
-  claims = "claims"
+  claims = 'claims',
 }
 export enum UserTypes {
   admin = 'admin',
@@ -36,6 +36,7 @@ export interface EndpointsConfig {
   employers: string;
   users: string;
   claims: string;
+  plans: string;
 }
 export interface User {
   firstName?: string;
@@ -79,4 +80,28 @@ export enum DialogAction {
   approve = 'approve',
   deny = 'deny',
 }
-export type StrictFormValues = FormValues & { plan?: Plan };
+export enum PayrollFrequency {
+  weekly = 'weekly',
+  monthly = 'monthly',
+}
+export enum PlanYearStatus {
+  initialized = 'initialized',
+  notInitialized = 'not initialized',
+}
+export interface PlanYear {
+  id: string;
+  employer: string;
+  startDate: Date;
+  endDate: Date;
+  payrollFrequency: PayrollFrequency;
+  plan: Plan;
+  name: string;
+  contributions: number;
+  status: PlanYearStatus;
+}
+export type StrictFormValues = FormValues & {
+  plan?: Plan;
+  status?: ClaimStatus;
+  payrollFrequency?: PayrollFrequency | '';
+  endDate?: string | undefined;
+};

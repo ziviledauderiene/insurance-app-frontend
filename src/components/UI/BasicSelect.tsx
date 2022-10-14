@@ -1,4 +1,9 @@
-import { FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import { FormikProps } from 'formik';
 import { capitalize } from 'helpers';
 import { StrictFormValues } from 'interfaces';
@@ -26,7 +31,7 @@ const BasicSelect = ({
       <Select
         labelId="selectBoxName"
         name={name}
-        value={selectValue}
+        value={selectValue || ''}
         label={capitalize(name)}
         onChange={(event: SelectChangeEvent<typeof selectValue>) => {
           if (setDisableButton) {

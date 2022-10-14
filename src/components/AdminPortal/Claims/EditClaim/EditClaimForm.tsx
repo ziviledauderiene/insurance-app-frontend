@@ -7,25 +7,13 @@ import {
   TextInput,
 } from 'components';
 import { FormikProps, useFormik } from 'formik';
-import { checkIfOnlyNumbers, updateClaim } from 'helpers';
+import { editClaimValidationSchema, updateClaim } from 'helpers';
 import { Claim, Plan, StrictFormValues } from 'interfaces';
 import { useState } from 'react';
-import * as Yup from 'yup';
 
 interface EditClaimFormProps {
   claim: Claim;
 }
-
-const validationSchema = Yup.object().shape({
-  date: Yup.date().nullable().required(),
-  amount: Yup.string()
-    .required('Please enter the amount')
-    .test(
-      'Numbers only',
-      'Please use only numbers',
-      (value) => !!value && checkIfOnlyNumbers(value)
-    ),
-});
 
 const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
   const [formMessage, setFormMessage] = useState<string>('');
@@ -44,7 +32,7 @@ const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
   };
   const formik: FormikProps<StrictFormValues> = useFormik<StrictFormValues>({
     initialValues,
-    validationSchema,
+    validationSchema: editClaimValidationSchema,
     onSubmit,
   });
   const { dirty, handleSubmit, isValid } = formik;
@@ -68,7 +56,11 @@ const EditClaimForm = ({ claim }: EditClaimFormProps): JSX.Element => {
       <form onSubmit={handleSubmit}>
         <Grid container rowSpacing={2} direction="column" px={10} pb={10}>
           <Grid item>
-            <BasicDatePicker date={claim.date} formik={formik} />
+            <BasicDatePicker
+              fieldName="date"
+              label="Date of Service"
+              formik={formik}
+            />
           </Grid>
           <Grid item>
             <BasicSelect name="plan" formik={formik}>

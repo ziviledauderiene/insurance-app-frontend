@@ -12,6 +12,9 @@ import EmployerHome from './AdminPortal/Employer/EmployerHome/EmployerHome';
 import EmployersTable from './AdminPortal/Employer/EmployerHome/EmployersTable';
 import SearchBar from './AdminPortal/Employer/EmployerHome/SearchBar';
 import SearchInput from './AdminPortal/Employer/EmployerHome/SearchInput';
+import EmployerPlansManager from './AdminPortal/Employer/EmployerPlansManager/EmployerPlansManager';
+import PlanYearForm from './AdminPortal/Employer/EmployerPlansManager/PlanYearForm';
+import PlanYearsTable from './AdminPortal/Employer/EmployerPlansManager/PlanYearsTable';
 import EmployerSetup from './AdminPortal/Employer/EmployerSetup/EmployerSetup';
 import EmployerUserForm from './AdminPortal/Employer/EmployerUserManager/EmployerUserForm';
 import EmployerUsersManager from './AdminPortal/Employer/EmployerUserManager/EmployerUsersManager';
@@ -58,4 +61,7 @@ export {
   ClaimsTable,
   ClaimsHome,
   ClaimSearch,
+  EmployerPlansManager,
+  PlanYearsTable,
+  PlanYearForm,
 };

@@ -42,9 +42,11 @@ const rowStyles = {
   },
 };
 
-const headerTitles = ['Actions', 'First Name', 'Last Name', 'Email'];
+const headerTitles = ['First Name', 'Last Name', 'Email', 'Actions'];
 const headerList = headerTitles.map((title) => (
-  <TableCell {...headCellStyles} key={title}>{title}</TableCell>
+  <TableCell {...headCellStyles} key={title}>
+    {title}
+  </TableCell>
 ));
 
 const UsersTable = ({
@@ -89,6 +91,11 @@ const UsersTable = ({
               {employersUsersList.length > 0 &&
                 employersUsersList.map((user) => (
                   <TableRow key={user.id} {...rowStyles}>
+                    <TableCell {...bodyCellStyles} id={user.id}>
+                      {user.firstName}
+                    </TableCell>
+                    <TableCell {...bodyCellStyles}>{user.lastName}</TableCell>
+                    <TableCell {...bodyCellStyles}>{user.email}</TableCell>
                     <TableCell>
                       <BasicModal label={<Edit />}>
                         <EmployerUserForm
@@ -115,11 +122,6 @@ const UsersTable = ({
                         </DialogActions>
                       </Dialog>
                     </TableCell>
-                    <TableCell {...bodyCellStyles} id={user.id}>
-                      {user.firstName}
-                    </TableCell>
-                    <TableCell {...bodyCellStyles}>{user.lastName}</TableCell>
-                    <TableCell {...bodyCellStyles}>{user.email}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

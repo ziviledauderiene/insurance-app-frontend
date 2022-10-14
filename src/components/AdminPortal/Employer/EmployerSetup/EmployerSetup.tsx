@@ -1,7 +1,7 @@
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
 import { AddEmployerForm } from 'components';
 import BasicModal from 'components/UI/BasicModal';
-import { AdminPages, FormActions, Portals } from 'interfaces';
+import { AdminPages, FormActions } from 'interfaces';
 import { Link } from 'react-router-dom';
 
 const buttons = [
@@ -35,10 +35,7 @@ const EmployerSetup = (): JSX.Element => (
             <Typography variant="h6">Plan Setup</Typography>
           </Grid>
           <Grid item>
-            <Link
-              to={`/${Portals.admin}/${AdminPages.plans}`}
-              style={{ textDecoration: 'none' }}
-            >
+            <Link to={`${AdminPages.plans}`} style={{ textDecoration: 'none' }}>
               <Button>Manage Plans</Button>
             </Link>
           </Grid>

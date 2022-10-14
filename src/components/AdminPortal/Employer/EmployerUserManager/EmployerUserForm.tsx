@@ -1,13 +1,17 @@
 import { Container, Typography } from '@mui/material';
 import { AxiosError } from 'axios';
 import { BaseForm } from 'components';
-import { emailRegEx } from 'consts';
 import { FormikHelpers } from 'formik';
-import { createEmployerUser, getUser, updateEmployerUser } from 'helpers';
+import {
+  addUserValidation,
+  createEmployerUser,
+  getUser,
+  updateEmployerUser,
+  updateUserValidation,
+} from 'helpers';
 import { FormActions, FormNames, FormValues, UserTypes } from 'interfaces';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import * as Yup from 'yup';
 
 interface EmployerUserFormProps {
   action: FormActions;
@@ -33,27 +37,7 @@ const addUserFields = [
   FormNames.username,
   FormNames.password,
 ];
-const updateUserValidation = Yup.object().shape({
-  [FormNames.firstName]: Yup.string().required('Please enter the First Name'),
-  [FormNames.lastName]: Yup.string().required('Please enter the Last Name'),
-  [FormNames.email]: Yup.string()
-    .required('Please enter the email')
-    .matches(emailRegEx, 'Please check the email'),
 
-  [FormNames.username]: Yup.string().required('Please enter the username'),
-});
-const addUserValidation = Yup.object().shape({
-  [FormNames.firstName]: Yup.string().required('Please enter the First Name'),
-  [FormNames.lastName]: Yup.string().required('Please enter the Last Name'),
-  [FormNames.email]: Yup.string()
-    .required('Please enter the email')
-    .matches(emailRegEx, 'Please check the email'),
-
-  [FormNames.username]: Yup.string().required('Please enter the username'),
-  [FormNames.password]: Yup.string()
-    .required('Please enter the password')
-    .min(3, 'Password is too short. At least 3 chars required'),
-});
 const EmployerUserForm = ({
   action,
   userId,

@@ -1,6 +1,6 @@
 import { EndpointsConfig, Portals } from 'interfaces';
 
-export const routes: [Portals.admin, Portals.employer, Portals.consumer,] = [
+export const routes: [Portals.admin, Portals.employer, Portals.consumer] = [
   Portals.admin,
   Portals.employer,
   Portals.consumer,
@@ -11,8 +11,9 @@ export const endpoints: EndpointsConfig = {
   validate: 'api/validate',
   employers: 'api/employers',
   users: 'api/users',
-  claims: 'api/claims'
+  claims: 'api/claims',
+  plans: 'api/plans',
 };
 
 export const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-export const numbersRegEx = /^\d+$/
+export const numbersRegEx = /^\d+$/;

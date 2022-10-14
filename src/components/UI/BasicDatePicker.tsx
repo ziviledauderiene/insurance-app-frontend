@@ -6,21 +6,34 @@ import { FormikProps } from 'formik';
 import { StrictFormValues } from 'interfaces';
 
 interface BasicDatePickerProps {
-  date: string;
+  label: string;
   formik: FormikProps<StrictFormValues>;
+  fieldName: string;
 }
 
-const BasicDatePicker = ({ formik }: BasicDatePickerProps): JSX.Element => {
+const BasicDatePicker = ({
+  formik,
+  label,
+  fieldName,
+}: BasicDatePickerProps): JSX.Element => {
   const { values, setFieldValue, errors } = formik;
   return (
     <FormControl fullWidth>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          label="Date of Service"
-          value={values.date}
-          onChange={(newValue) => setFieldValue('date', newValue)}
+          label={label}
+          value={values[fieldName]}
+          onChange={(newValue) => setFieldValue(fieldName, newValue)}
           renderInput={(params) => (
-            <TextField {...params} error={!!errors.date} helperText={errors.date && "Please select the correct date"} />
+            <TextField
+              {...params}
+              error={!!errors[fieldName]}
+              helperText={
+                fieldName === 'endDate' && !errors[fieldName]
+                  ? 'Optional. It will be set to +1year after the Start Date if you will leave it blank.'
+                  : errors[fieldName]
+              }
+            />
           )}
         />
       </LocalizationProvider>

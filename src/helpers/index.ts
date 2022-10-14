@@ -1,23 +1,32 @@
 import {
   createEmployer,
   createEmployerUser,
+  createPlanYear,
   deleteUser,
-  getClaim, getClaims, getEmployer,
+  getClaim,
+  getClaims,
+  getEmployer,
   getEmployers,
   getUser,
   getUsersByEmployer,
   updateClaim,
   updateEmployer,
-  updateEmployerUser
+  updateEmployerUser,
 } from './api';
 import generatePassword from './generatePassword';
 import {
   deleteFromLocalStorage,
   getFromLocalStorage,
-  saveInLocalStorage
+  saveInLocalStorage,
 } from './localStorage';
 import sendRequest from './sendRequest';
 import { capitalize, checkIfOnlyNumbers } from './strings';
+import {
+  addPlanYearValidationSchema,
+  addUserValidation,
+  editClaimValidationSchema,
+  updateUserValidation,
+} from './validation';
 
 export {
   sendRequest,
@@ -38,5 +47,10 @@ export {
   updateClaim,
   checkIfOnlyNumbers,
   getClaims,
-  updateEmployer
+  updateEmployer,
+  createPlanYear,
+  editClaimValidationSchema,
+  addPlanYearValidationSchema,
+  updateUserValidation,
+  addUserValidation,
 };

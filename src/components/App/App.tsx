@@ -1,13 +1,14 @@
 import { CssBaseline } from '@mui/material';
 import {
   AdminPortal,
+  ClaimsHome,
+  EditClaim,
+  EmployerHome,
+  EmployerPlansManager,
   EmployerSetup,
+  EmployerUsersManager,
   Header,
   LoginForm,
-  EmployerUsersManager,
-  EditClaim,
-  ClaimsHome,
-  EmployerHome,
 } from 'components';
 import { Portals } from 'interfaces';
 import { useContext } from 'react';
@@ -29,6 +30,10 @@ const App = (): JSX.Element => {
           <Route
             path="employers/:employerId/users"
             element={<EmployerUsersManager />}
+          />
+          <Route
+            path="employers/:employerId/plans"
+            element={<EmployerPlansManager />}
           />
           <Route path="claims" element={<ClaimsHome />} />
           <Route path="claims/:claimNumber" element={<EditClaim />} />

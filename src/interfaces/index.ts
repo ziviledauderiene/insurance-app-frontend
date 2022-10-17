@@ -39,13 +39,13 @@ export interface EndpointsConfig {
   plans: string;
 }
 export interface User {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  username?: string;
-  password?: string;
-  userType?: UserTypes;
-  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  userType: UserTypes;
+  id: string;
 }
 export interface Employer {
   name: string;
@@ -79,6 +79,8 @@ export interface Claim {
 export enum DialogAction {
   approve = 'approve',
   deny = 'deny',
+  delete = 'delete',
+  initialize = 'initialize',
 }
 export enum PayrollFrequency {
   weekly = 'weekly',

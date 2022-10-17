@@ -3,7 +3,7 @@ import ClaimSearch from './AdminPortal/Claims/ClaimsHome/ClaimSearch';
 import ClaimsHome from './AdminPortal/Claims/ClaimsHome/ClaimsHome';
 import ClaimsTable from './AdminPortal/Claims/ClaimsHome/ClaimsTable';
 import ClaimData from './AdminPortal/Claims/EditClaim/ClaimData';
-import ConfirmDialog from './AdminPortal/Claims/EditClaim/ConfirmDialog';
+import ConfirmDialog from './UI/ConfirmDialog';
 import EditClaim from './AdminPortal/Claims/EditClaim/EditClaim';
 import EditClaimForm from './AdminPortal/Claims/EditClaim/EditClaimForm';
 import EmployerHeader from './AdminPortal/Employer/EmployerHeader';

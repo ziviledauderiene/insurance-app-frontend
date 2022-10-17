@@ -118,3 +118,9 @@ export const createPlanYear = async (
   );
   return newPlanYear;
 };
+export const deletePlanYear = async (id: string) => {
+  await sendRequest(`${endpoints.plans}/${id}`, 'DELETE');
+};
+export const initializePlanYear = async (id: string) => {
+  await sendRequest(`${endpoints.plans}/${id}/initialize`, 'PATCH');
+};

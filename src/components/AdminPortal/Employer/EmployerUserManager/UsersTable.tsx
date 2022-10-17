@@ -1,11 +1,7 @@
 import { Delete, Edit } from '@mui/icons-material';
 import {
-  Button,
   Card,
   Container,
-  Dialog,
-  DialogActions,
-  DialogTitle,
   IconButton,
   Table,
   TableBody,
@@ -14,10 +10,10 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { BasicModal, EmployerUserForm } from 'components';
+import { BasicModal, ConfirmDialog, EmployerUserForm } from 'components';
 import { deleteUser } from 'helpers';
-import { FormActions, User } from 'interfaces';
-import { MouseEvent, useState } from 'react';
+import { DialogAction, FormActions, User } from 'interfaces';
+import { useState } from 'react';
 
 interface EmployersUserProps {
   employersUsersList: User[];
@@ -55,13 +51,21 @@ const UsersTable = ({
   error,
 }: EmployersUserProps): JSX.Element => {
   const [dialogIsOpen, setDialogOpen] = useState(false);
-
-  const handleDialogOpen = () => setDialogOpen(true);
+  const [selectedUserId, setSelectedUserId] = useState<string | undefined>(
+    undefined
+  );
+  const handleDialogOpen = (id: string) => {
+    setDialogOpen(true);
+    setSelectedUserId(id);
+  };
   const handleDialogClose = () => setDialogOpen(false);
-  const deleteHandler = async (event: MouseEvent<HTMLElement>) => {
-    const { id } = event.target as HTMLElement;
-    await deleteUser(id);
-    setDialogOpen(false);
+  const deleteHandler = async (id: string) => {
+    try {
+      await deleteUser(id);
+      setDialogOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -103,24 +107,21 @@ const UsersTable = ({
                           userId={user.id}
                         />
                       </BasicModal>
-                      <IconButton color="error" onClick={handleDialogOpen}>
+                      <IconButton
+                        color="error"
+                        onClick={() => handleDialogOpen(user.id)}
+                      >
                         <Delete />
                       </IconButton>
-                      <Dialog open={dialogIsOpen} onClose={handleDialogClose}>
-                        <DialogTitle>
-                          Are you sure to delete this User?
-                        </DialogTitle>
-                        <DialogActions>
-                          <Button
-                            color="error"
-                            id={user.id}
-                            onClick={deleteHandler}
-                          >
-                            Delete
-                          </Button>
-                          <Button onClick={handleDialogClose}>Cancel</Button>
-                        </DialogActions>
-                      </Dialog>
+                      {selectedUserId && (
+                        <ConfirmDialog
+                          action={DialogAction.delete}
+                          dialogIsOpen={dialogIsOpen}
+                          handleConfirm={() => deleteHandler(selectedUserId)}
+                          handleDialogClose={handleDialogClose}
+                          label="User"
+                        />
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

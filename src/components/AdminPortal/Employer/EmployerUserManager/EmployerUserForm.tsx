@@ -59,7 +59,7 @@ const EmployerUserForm = ({
       (async () => {
         try {
           const user = await getUser(userId);
-          const prefillValues = user as FormValues;
+          const prefillValues = user as unknown as FormValues;
           setFormValues(prefillValues);
         } catch (error) {
           console.error(error);

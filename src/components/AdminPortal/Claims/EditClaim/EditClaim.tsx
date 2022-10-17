@@ -116,6 +116,7 @@ const EditClaim = (): JSX.Element => {
                 dialogIsOpen={dialogIsOpen}
                 handleConfirm={confirmHandler}
                 handleDialogClose={closeHandler}
+                label="Claim"
               />
             </Box>
           </>

@@ -4,7 +4,7 @@ import {
   deleteFromLocalStorage,
   getFromLocalStorage,
   saveInLocalStorage,
-  sendRequest
+  sendRequest,
 } from 'helpers';
 import { FormValues, User, UserTypes } from 'interfaces';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
@@ -15,7 +15,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 export interface AuthContextConfig {
-  user?: User;
+  user?: Partial<User>;
   login: (values: FormValues) => Promise<void>;
   logout: () => void;
 }
@@ -23,7 +23,7 @@ interface DecodedJwt extends JwtPayload {
   username?: string;
   userType?: UserTypes;
 }
-const getDecodedUser = (token: string): User => {
+const getDecodedUser = (token: string): Partial<User> => {
   const { username, userType }: DecodedJwt = jwtDecode(token);
   return { username, userType };
 };
@@ -34,7 +34,7 @@ export const AuthContext = createContext<AuthContextConfig>({
 });
 
 const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<Partial<User> | undefined>(undefined);
   const navigate: NavigateFunction = useNavigate();
 
   const logout = (): void => {
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       values
     );
     saveInLocalStorage('token', token);
-    const decodedUser: User = getDecodedUser(token);
+    const decodedUser = getDecodedUser(token);
     setUser(decodedUser);
     navigate(`/${decodedUser.userType || '/'}`);
   };
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
             'post'
           );
           if (tokenIsValid) {
-            const decodedUser: User = getDecodedUser(token);
+            const decodedUser = getDecodedUser(token);
             setUser(decodedUser);
             navigate(`/${decodedUser.userType || '/'}`);
           }

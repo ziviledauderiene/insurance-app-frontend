@@ -1,5 +1,6 @@
 import { Delete, Edit } from '@mui/icons-material';
 import {
+  Button,
   Card,
   Table,
   TableBody,
@@ -7,13 +8,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
 } from '@mui/material';
-import { BasicModal } from 'components';
-import { PlanYear, PlanYearStatus } from 'interfaces';
+import { BasicModal, ConfirmDialog } from 'components';
+import { deletePlanYear, initializePlanYear } from 'helpers';
+import { DialogAction, PlanYear, PlanYearStatus } from 'interfaces';
 import { useState } from 'react';
 import theme from 'styles';
 
@@ -46,9 +44,41 @@ const PlanYearsTable = ({
   loading,
   error,
 }: PlanYearsTableProps): JSX.Element => {
-  const [dialogIsOpen, setDialogOpen] = useState<boolean>(false);
-  const handleDialogOpen = () => setDialogOpen(true);
-  const handleDialogClose = () => setDialogOpen(false);
+  const [deleteDialogIsOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [initializeDialogIsOpen, setInitializeDialogOpen] =
+    useState<boolean>(false);
+  const [selectedPlanYearId, setSelectedPlanYearId] = useState<
+    string | undefined
+  >(undefined);
+
+  const handleDialogOpen = (id: string) => {
+    setDeleteDialogOpen(true);
+    setSelectedPlanYearId(id);
+  };
+  const handleInitializeDialogOpen = (id: string) => {
+    setInitializeDialogOpen(true);
+    setSelectedPlanYearId(id);
+  };
+
+  const handleDialogClose = () => setDeleteDialogOpen(false);
+  const handleInitializeDialogClose = () => setInitializeDialogOpen(false);
+
+  const initializeHandler = async (id: string) => {
+    try {
+      await initializePlanYear(id);
+      setInitializeDialogOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const deleteHandler = async (id: string) => {
+    try {
+      await deletePlanYear(id);
+      setDeleteDialogOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Card elevation={0} variant="outlined">
@@ -92,9 +122,21 @@ const PlanYearsTable = ({
                   >
                     <Button
                       disabled={planYear.status === PlanYearStatus.initialized}
+                      onClick={() => handleInitializeDialogOpen(planYear.id)}
                     >
                       Initialize
                     </Button>
+                    {selectedPlanYearId && (
+                      <ConfirmDialog
+                        action={DialogAction.initialize}
+                        dialogIsOpen={initializeDialogIsOpen}
+                        handleConfirm={() =>
+                          initializeHandler(selectedPlanYearId)
+                        }
+                        handleDialogClose={handleInitializeDialogClose}
+                        label="Plan Year"
+                      />
+                    )}
                     <BasicModal
                       label={
                         <>
@@ -104,24 +146,22 @@ const PlanYearsTable = ({
                     >
                       <div>Update</div>
                     </BasicModal>
-                    <Button color="error" onClick={handleDialogOpen}>
+                    <Button
+                      color="error"
+                      onClick={() => handleDialogOpen(planYear.id)}
+                      disabled={planYear.status === PlanYearStatus.initialized}
+                    >
                       Remove <Delete />
                     </Button>
-                    <Dialog open={dialogIsOpen} onClose={handleDialogClose}>
-                      <DialogTitle>
-                        Are you sure to remove this Plan Year?
-                      </DialogTitle>
-                      <DialogActions>
-                        <Button
-                          color="error"
-                          id={planYear.id}
-                          //   onClick={deleteHandler}
-                        >
-                          Delete
-                        </Button>
-                        <Button onClick={handleDialogClose}>Cancel</Button>
-                      </DialogActions>
-                    </Dialog>
+                    {selectedPlanYearId && (
+                      <ConfirmDialog
+                        action={DialogAction.delete}
+                        dialogIsOpen={deleteDialogIsOpen}
+                        handleConfirm={() => deleteHandler(selectedPlanYearId)}
+                        handleDialogClose={handleDialogClose}
+                        label="Plan Year"
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

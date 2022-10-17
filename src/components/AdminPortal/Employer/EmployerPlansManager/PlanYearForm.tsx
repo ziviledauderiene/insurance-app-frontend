@@ -32,7 +32,7 @@ const PlanYearForm = ({
     if (action === FormActions.add && employerId) {
       try {
         const data =
-          values.endDate === ('' || null)
+          values.endDate === null || values.endDate === ''
             ? {
                 ...values,
                 status: PlanYearStatus.notInitialized,

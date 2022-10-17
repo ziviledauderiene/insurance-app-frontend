@@ -2,6 +2,7 @@ import {
   createEmployer,
   createEmployerUser,
   createPlanYear,
+  deletePlanYear,
   deleteUser,
   getClaim,
   getClaims,
@@ -9,6 +10,7 @@ import {
   getEmployers,
   getUser,
   getUsersByEmployer,
+  initializePlanYear,
   updateClaim,
   updateEmployer,
   updateEmployerUser,
@@ -53,4 +55,6 @@ export {
   addPlanYearValidationSchema,
   updateUserValidation,
   addUserValidation,
+  deletePlanYear,
+  initializePlanYear,
 };

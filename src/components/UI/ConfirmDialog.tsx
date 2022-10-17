@@ -6,6 +6,7 @@ interface ConfirmDialogProps {
   action: DialogAction | undefined;
   handleConfirm: () => Promise<void>;
   handleDialogClose: () => void;
+  label: string;
 }
 
 const ConfirmDialog = ({
@@ -13,9 +14,12 @@ const ConfirmDialog = ({
   action,
   handleConfirm,
   handleDialogClose,
+  label,
 }: ConfirmDialogProps) => (
   <Dialog open={dialogIsOpen} onClose={handleDialogClose}>
-    <DialogTitle>Are you sure to {action} this claim?</DialogTitle>
+    <DialogTitle>
+      Are you sure to {action} this {label}?
+    </DialogTitle>
     <DialogActions>
       <Button onClick={handleConfirm}>Confirm</Button>
       <Button onClick={handleDialogClose}>Cancel</Button>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext, AuthContextConfig } from 'store';
 
 interface HeaderProps {
-  user?: User;
+  user?: Partial<User>;
 }
 const boxStyles = {
   display: 'flex',

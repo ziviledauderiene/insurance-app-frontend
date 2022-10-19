@@ -106,4 +106,21 @@ export type StrictFormValues = FormValues & {
   status?: ClaimStatus;
   payrollFrequency?: PayrollFrequency | '';
   endDate?: string | undefined;
+  startDate?: string | undefined;
 };
+export interface ResponseConfig<T> {
+  user?: T;
+  users?: T;
+  employer?: T;
+  employers?: T;
+  claim?: T;
+  planYear?: T;
+  planYears?: T;
+  message: string;
+}
+export enum AlertSeverity {
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+}

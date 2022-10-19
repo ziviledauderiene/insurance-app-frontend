@@ -1,6 +1,11 @@
-import { BasicModal, PlanYearForm, PlanYearsTable } from 'components';
+import {
+  BasicModal,
+  PlanYearForm,
+  PlanYearsTable,
+  SnackBarNote,
+} from 'components';
 import { getPlanYearsByEmployer } from 'helpers/api';
-import { FormActions, PlanYear } from 'interfaces';
+import { AlertSeverity, FormActions, PlanYear } from 'interfaces';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -9,6 +14,10 @@ const EmployerPlansManager = (): JSX.Element => {
   const [planYearsList, setPlanYearsList] = useState<PlanYear[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [snackIsOpen, setSnackOpen] = useState<boolean>(false);
+  const [snackMessage, setSnackMessage] = useState<string | undefined>();
+  const [severity, setSeverity] = useState<AlertSeverity | undefined>();
+  const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
     if (employerId) {
@@ -24,17 +33,44 @@ const EmployerPlansManager = (): JSX.Element => {
         }
       })();
     }
-  }, []);
+  }, [reload]);
+
+  const handleSnackClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackOpen(false);
+  };
+  const onSuccess = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.success);
+    setSnackOpen(true);
+    setReload((prevState) => !prevState);
+  };
 
   return (
     <>
       <BasicModal label="Add new Plan Year">
-        <PlanYearForm action={FormActions.add} employerId={employerId} />
+        <PlanYearForm
+          action={FormActions.add}
+          employerId={employerId}
+          onSuccess={onSuccess}
+        />
       </BasicModal>
       <PlanYearsTable
         planYearsList={planYearsList}
         loading={loading}
         error={error}
+        onSuccess={onSuccess}
+      />
+      <SnackBarNote
+        snackMessage={snackMessage}
+        snackIsOpen={snackIsOpen}
+        handleSnackClose={handleSnackClose}
+        severity={severity}
       />
     </>
   );

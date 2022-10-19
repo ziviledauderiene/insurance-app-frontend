@@ -1,13 +1,15 @@
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { Prompt, TextInput } from 'components';
-import { FormikHelpers, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import { createEmployer, getEmployer, updateEmployer } from 'helpers';
 import { FormActions, FormValues } from 'interfaces';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 interface AddEmployerFormProps {
   action: FormActions;
+  onSuccess: (message: string) => void;
+  handleClose?: () => void;
 }
 
 const initialValues: FormValues = {
@@ -33,29 +35,30 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const AddEmployerForm = ({ action }: AddEmployerFormProps): JSX.Element => {
+const AddEmployerForm = ({
+  action,
+  onSuccess,
+  handleClose,
+}: AddEmployerFormProps): JSX.Element => {
   const { employerId } = useParams();
-  const [formMessage, setFormMessage] = useState<string>('');
 
-  const onSubmit = async (
-    values: FormValues,
-    { resetForm }: FormikHelpers<FormValues>
-  ) => {
+  const onSubmit = async (values: FormValues) => {
     try {
+      let message = '';
       if (action === FormActions.add) {
-        await createEmployer(values);
+        const response = await createEmployer(values);
+        message = response.message;
       }
       if (action === FormActions.update) {
         if (employerId) {
-          await updateEmployer(values, employerId);
+          const response = await updateEmployer(values, employerId);
+          message = response.message;
         }
       }
-      resetForm(initialValues);
-      setFormMessage(
-        `Employer "${values.name}, ${values.code}" ${
-          action === FormActions.add ? 'created' : 'updated'
-        } successfully`
-      );
+      if (handleClose) {
+        handleClose();
+      }
+      onSuccess(message);
     } catch (error) {
       console.log(error);
     }
@@ -86,9 +89,6 @@ const AddEmployerForm = ({ action }: AddEmployerFormProps): JSX.Element => {
     <Container>
       <Prompt formIsDirty={dirty} />
       <form onSubmit={handleSubmit}>
-        <Typography align="center" mt={10}>
-          {formMessage}
-        </Typography>
         <Typography variant="h6" ml={10} mt={5} mb={-5}>
           {action === FormActions.add ? 'Add new' : 'Update'} Employer
         </Typography>
@@ -114,5 +114,7 @@ const AddEmployerForm = ({ action }: AddEmployerFormProps): JSX.Element => {
     </Container>
   );
 };
+
+AddEmployerForm.defaultProps = { handleClose: undefined };
 
 export default AddEmployerForm;

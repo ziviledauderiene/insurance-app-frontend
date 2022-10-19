@@ -16,6 +16,8 @@ import { useParams } from 'react-router-dom';
 interface EmployerUserFormProps {
   action: FormActions;
   userId?: string;
+  handleClose?: () => void;
+  onSuccess: (message: string) => void;
 }
 const initialValues: FormValues = {
   [FormNames.firstName]: '',
@@ -41,10 +43,10 @@ const addUserFields = [
 const EmployerUserForm = ({
   action,
   userId,
+  handleClose,
+  onSuccess,
 }: EmployerUserFormProps): JSX.Element => {
   const { employerId } = useParams();
-  const [formError, setFormError] = useState<string>('');
-  const [formMessage, setFormMessage] = useState<string>('');
   const [formValues, setFormValues] = useState<FormValues | undefined>(
     undefined
   );
@@ -70,7 +72,7 @@ const EmployerUserForm = ({
 
   const onSubmit = async (
     values: FormValues,
-    { resetForm, setFieldError }: FormikHelpers<FormValues>
+    { setFieldError }: FormikHelpers<FormValues>
   ): Promise<void> => {
     try {
       const data = employerId && {
@@ -78,31 +80,29 @@ const EmployerUserForm = ({
         employer: employerId,
         userType: UserTypes.employer,
       };
+      let message = '';
       if (action === FormActions.add) {
         if (data) {
-          await createEmployerUser(data);
+          const response = await createEmployerUser(data);
+          message = response.message;
         }
       }
       if (action === FormActions.update) {
         if (data && userId) {
-          await updateEmployerUser(values, userId);
+          const response = await updateEmployerUser(values, userId);
+          message = response.message;
         }
       }
-      resetForm(initialValues);
-      setFormMessage(
-        `User "${values.username}" ${
-          action === FormActions.add ? 'created' : 'updated'
-        } successfully`
-      );
+      if (handleClose) {
+        handleClose();
+      }
+      onSuccess(message);
     } catch (error: unknown) {
       if (
         error instanceof AxiosError &&
         error.response &&
         error.response.status === 400
       ) {
-        setFormError(
-          `Username "${values.username}" already exists. Please choose a different one.`
-        );
         setFieldError(
           FormNames.username,
           `Username "${values.username}" already exists. Please choose a different one.`
@@ -110,15 +110,9 @@ const EmployerUserForm = ({
       }
     }
   };
+
   return (
     <Container>
-      <Typography
-        color={formMessage ? 'success' : 'error'}
-        align="center"
-        mt={10}
-      >
-        {formMessage || formError}
-      </Typography>
       <Typography variant="h6" ml={10} mt={5} mb={-5}>
         {action === FormActions.add ? 'Add new' : 'Update'} User
       </Typography>
@@ -137,6 +131,7 @@ const EmployerUserForm = ({
 
 EmployerUserForm.defaultProps = {
   userId: undefined,
+  handleClose: undefined,
 };
 
 export default EmployerUserForm;

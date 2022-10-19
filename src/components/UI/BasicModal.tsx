@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, Card, Container, Modal } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface BasicModalProps {
   children: JSX.Element;
@@ -37,7 +37,7 @@ const BasicModal = ({ children, label }: BasicModalProps): JSX.Element => {
                 Close
                 <CloseIcon />
               </Button>
-              {children}
+              {React.cloneElement(children, { handleClose })}
             </Card>
           </Container>
         </Modal>

@@ -19,6 +19,7 @@ interface EmployersUserProps {
   employersUsersList: User[];
   loading: boolean;
   error: string | null;
+  onSuccess: (message: string) => void;
 }
 const headCellStyles = {
   sx: {
@@ -49,6 +50,7 @@ const UsersTable = ({
   employersUsersList,
   loading,
   error,
+  onSuccess,
 }: EmployersUserProps): JSX.Element => {
   const [dialogIsOpen, setDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>(
@@ -63,6 +65,7 @@ const UsersTable = ({
     try {
       await deleteUser(id);
       setDialogOpen(false);
+      onSuccess('User deleted successfully');
     } catch (err) {
       console.error(err);
     }
@@ -105,6 +108,7 @@ const UsersTable = ({
                         <EmployerUserForm
                           action={FormActions.update}
                           userId={user.id}
+                          onSuccess={onSuccess}
                         />
                       </BasicModal>
                       <IconButton

@@ -5,6 +5,7 @@ import {
   FormValues,
   PlanYear,
   PlanYearStatus,
+  ResponseConfig,
   StrictFormValues,
   User,
 } from 'interfaces';
@@ -22,21 +23,21 @@ export const getEmployers = async (
 
 export const createEmployer = async (
   postdata: FormValues
-): Promise<Employer> => {
-  const { employer } = await sendRequest(endpoints.employers, 'POST', postdata);
-  return employer;
+): Promise<ResponseConfig<Employer>> => {
+  const response = await sendRequest(endpoints.employers, 'POST', postdata);
+  return response;
 };
 
 export const updateEmployer = async (
   values: FormValues,
   id: string
-): Promise<Employer> => {
-  const { employer } = await sendRequest(
+): Promise<ResponseConfig<Employer>> => {
+  const response = await sendRequest(
     `${endpoints.employers}/${id}`,
     'PATCH',
     values
   );
-  return employer;
+  return response;
 };
 
 export const getEmployer = async (id: string): Promise<Employer> => {
@@ -50,21 +51,23 @@ export const getUsersByEmployer = async (id: string): Promise<User[]> => {
   return users;
 };
 
-export const createEmployerUser = async (data: FormValues): Promise<User> => {
-  const { newUser } = await sendRequest(endpoints.users, 'POST', data);
-  return newUser;
+export const createEmployerUser = async (
+  data: FormValues
+): Promise<ResponseConfig<User>> => {
+  const response = await sendRequest(endpoints.users, 'POST', data);
+  return response;
 };
 
 export const updateEmployerUser = async (
   values: FormValues,
   id: string
-): Promise<User> => {
-  const { user } = await sendRequest(
+): Promise<ResponseConfig<User>> => {
+  const response = await sendRequest(
     `${endpoints.users}/${id}`,
     'PATCH',
     values
   );
-  return user;
+  return response;
 };
 
 export const deleteUser = async (id: string) => {
@@ -85,13 +88,13 @@ export const getClaim = async (claimNumber: string): Promise<Claim> => {
 export const updateClaim = async (
   id: string,
   data: Partial<Claim>
-): Promise<Claim> => {
-  const { claim } = await sendRequest(
+): Promise<ResponseConfig<Claim>> => {
+  const response = await sendRequest(
     `${endpoints.claims}/${id}`,
     'PATCH',
     data
   );
-  return claim;
+  return response;
 };
 export const getClaims = async (queryParams?: FormValues): Promise<Claim[]> => {
   const query = queryParams
@@ -110,17 +113,30 @@ export const getPlanYearsByEmployer = async (
 export const createPlanYear = async (
   data: Omit<StrictFormValues, 'status'> & { status: PlanYearStatus },
   employerId: string
-): Promise<PlanYear> => {
-  const { newPlanYear } = await sendRequest(
+): Promise<ResponseConfig<PlanYear>> => {
+  const response = await sendRequest(
     `${endpoints.plans}/${employerId}`,
     'POST',
     data
   );
-  return newPlanYear;
+  return response;
 };
 export const deletePlanYear = async (id: string) => {
   await sendRequest(`${endpoints.plans}/${id}`, 'DELETE');
 };
-export const initializePlanYear = async (id: string) => {
-  await sendRequest(`${endpoints.plans}/${id}/initialize`, 'PATCH');
+export const initializePlanYear = async (
+  id: string
+): Promise<ResponseConfig<PlanYear>> => {
+  const response = await sendRequest(
+    `${endpoints.plans}/${id}/initialize`,
+    'PATCH'
+  );
+  return response;
+};
+export const updatePlanYear = async (
+  id: string,
+  data: StrictFormValues
+): Promise<ResponseConfig<PlanYear>> => {
+  const response = await sendRequest(`${endpoints.plans}/${id}`, 'PATCH', data);
+  return response;
 };

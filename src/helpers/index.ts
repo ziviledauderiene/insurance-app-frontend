@@ -14,6 +14,7 @@ import {
   updateClaim,
   updateEmployer,
   updateEmployerUser,
+  updatePlanYear,
 } from './api';
 import generatePassword from './generatePassword';
 import {
@@ -27,6 +28,7 @@ import {
   addPlanYearValidationSchema,
   addUserValidation,
   editClaimValidationSchema,
+  updatePlanYearValidationSchema,
   updateUserValidation,
 } from './validation';
 
@@ -57,4 +59,6 @@ export {
   addUserValidation,
   deletePlanYear,
   initializePlanYear,
+  updatePlanYearValidationSchema,
+  updatePlanYear,
 };

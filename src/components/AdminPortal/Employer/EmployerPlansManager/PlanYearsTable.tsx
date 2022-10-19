@@ -9,16 +9,23 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { BasicModal, ConfirmDialog } from 'components';
+import { BasicModal, ConfirmDialog, PlanYearForm } from 'components';
 import { deletePlanYear, initializePlanYear } from 'helpers';
-import { DialogAction, PlanYear, PlanYearStatus } from 'interfaces';
+import {
+  DialogAction,
+  FormActions,
+  PlanYear,
+  PlanYearStatus,
+} from 'interfaces';
 import { useState } from 'react';
+import { useParams } from 'react-router';
 import theme from 'styles';
 
 interface PlanYearsTableProps {
   planYearsList: PlanYear[];
   loading: boolean;
   error: string | null;
+  onSuccess: (message: string) => void;
 }
 const headCellStyles = {
   sx: {
@@ -43,7 +50,9 @@ const PlanYearsTable = ({
   planYearsList,
   loading,
   error,
+  onSuccess,
 }: PlanYearsTableProps): JSX.Element => {
+  const { employerId } = useParams();
   const [deleteDialogIsOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [initializeDialogIsOpen, setInitializeDialogOpen] =
     useState<boolean>(false);
@@ -65,8 +74,9 @@ const PlanYearsTable = ({
 
   const initializeHandler = async (id: string) => {
     try {
-      await initializePlanYear(id);
+      const response = await initializePlanYear(id);
       setInitializeDialogOpen(false);
+      onSuccess(response.message);
     } catch (err) {
       console.error(err);
     }
@@ -75,6 +85,7 @@ const PlanYearsTable = ({
     try {
       await deletePlanYear(id);
       setDeleteDialogOpen(false);
+      onSuccess('Plan Year deleted successfully');
     } catch (err) {
       console.error(err);
     }
@@ -144,7 +155,12 @@ const PlanYearsTable = ({
                         </>
                       }
                     >
-                      <div>Update</div>
+                      <PlanYearForm
+                        action={FormActions.update}
+                        employerId={employerId}
+                        planYear={planYear}
+                        onSuccess={onSuccess}
+                      />
                     </BasicModal>
                     <Button
                       color="error"

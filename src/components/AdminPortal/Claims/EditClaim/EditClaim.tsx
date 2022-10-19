@@ -5,10 +5,12 @@ import {
   ConfirmDialog,
   EditClaimForm,
   ClaimData,
+  SnackBarNote,
 } from 'components';
 import { getClaim, updateClaim } from 'helpers';
 import {
   AdminPages,
+  AlertSeverity,
   Claim,
   ClaimStatus,
   DialogAction,
@@ -37,6 +39,10 @@ const EditClaim = (): JSX.Element => {
   const [dialogAction, setDialogAction] = useState<DialogAction | undefined>(
     undefined
   );
+  const [snackIsOpen, setSnackOpen] = useState<boolean>(false);
+  const [snackMessage, setSnackMessage] = useState<string | undefined>();
+  const [severity, setSeverity] = useState<AlertSeverity | undefined>();
+  const [reload, setReload] = useState<boolean>(false);
   const { claimNumber } = useParams();
   const navigate: NavigateFunction = useNavigate();
 
@@ -51,8 +57,23 @@ const EditClaim = (): JSX.Element => {
         }
       })();
     }
-  }, [claimNumber]);
+  }, [claimNumber, reload]);
 
+  const handleSnackClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackOpen(false);
+  };
+  const onSuccess = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.success);
+    setSnackOpen(true);
+    setReload((prevState) => !prevState);
+  };
   const approveHandler = () => {
     setDialogOpen(true);
     setDialogAction(DialogAction.approve);
@@ -97,7 +118,7 @@ const EditClaim = (): JSX.Element => {
                 </>
               }
             >
-              <EditClaimForm claim={claim} />
+              <EditClaimForm claim={claim} onSuccess={onSuccess} />
             </BasicModal>
           )}
         </Box>
@@ -117,6 +138,12 @@ const EditClaim = (): JSX.Element => {
                 handleConfirm={confirmHandler}
                 handleDialogClose={closeHandler}
                 label="Claim"
+              />
+              <SnackBarNote
+                snackMessage={snackMessage}
+                snackIsOpen={snackIsOpen}
+                handleSnackClose={handleSnackClose}
+                severity={severity}
               />
             </Box>
           </>

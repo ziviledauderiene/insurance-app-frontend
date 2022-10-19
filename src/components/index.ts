@@ -3,7 +3,6 @@ import ClaimSearch from './AdminPortal/Claims/ClaimsHome/ClaimSearch';
 import ClaimsHome from './AdminPortal/Claims/ClaimsHome/ClaimsHome';
 import ClaimsTable from './AdminPortal/Claims/ClaimsHome/ClaimsTable';
 import ClaimData from './AdminPortal/Claims/EditClaim/ClaimData';
-import ConfirmDialog from './UI/ConfirmDialog';
 import EditClaim from './AdminPortal/Claims/EditClaim/EditClaim';
 import EditClaimForm from './AdminPortal/Claims/EditClaim/EditClaimForm';
 import EmployerHeader from './AdminPortal/Employer/EmployerHeader';
@@ -27,7 +26,9 @@ import BasicDatePicker from './UI/BasicDatePicker';
 import BasicModal from './UI/BasicModal';
 import BasicSelect from './UI/BasicSelect';
 import BasicTabs from './UI/BasicTab';
+import ConfirmDialog from './UI/ConfirmDialog';
 import Prompt from './UI/Prompt';
+import SnackBarNote from './UI/SnackBarNote';
 import TabPanel from './UI/TabPanel';
 import TextInput from './UI/TextInput';
 
@@ -64,4 +65,5 @@ export {
   EmployerPlansManager,
   PlanYearsTable,
   PlanYearForm,
+  SnackBarNote,
 };

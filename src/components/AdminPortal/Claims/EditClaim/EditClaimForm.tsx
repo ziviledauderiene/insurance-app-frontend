@@ -7,12 +7,17 @@ import {
   TextInput,
 } from 'components';
 import { FormikProps, useFormik } from 'formik';
-import { editClaimValidationSchema, updateClaim } from 'helpers';
-import { Claim, Plan, StrictFormValues } from 'interfaces';
+import {
+  editClaimValidationSchema,
+  getFriendlyErrorOrFallback,
+  updateClaim,
+} from 'helpers';
+import { Claim, InputTypes, Plan, StrictFormValues } from 'interfaces';
 
 interface EditClaimFormProps {
   claim: Claim;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
   handleClose?: () => void;
 }
 
@@ -20,6 +25,7 @@ const EditClaimForm = ({
   claim,
   onSuccess,
   handleClose,
+  onError,
 }: EditClaimFormProps): JSX.Element => {
   const initialValues: StrictFormValues = {
     date: claim.date,
@@ -33,8 +39,8 @@ const EditClaimForm = ({
         handleClose();
       }
       onSuccess(response.message);
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      onError(getFriendlyErrorOrFallback(error));
     }
   };
   const formik: FormikProps<StrictFormValues> = useFormik<StrictFormValues>({
@@ -73,7 +79,11 @@ const EditClaimForm = ({
             </BasicSelect>
           </Grid>
           <Grid item>
-            <TextInput name="amount" formik={formik} />
+            <TextInput
+              name="amount"
+              formik={formik}
+              inputType={InputTypes.number}
+            />
           </Grid>
           <Grid item mt={2}>
             <Button

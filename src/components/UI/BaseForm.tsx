@@ -1,9 +1,11 @@
-import { Button, Grid } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Box, Button, Grid, IconButton } from '@mui/material';
 import { Prompt, TextInput } from 'components';
 import { FormikHelpers, FormikProps, useFormik } from 'formik';
 import { generatePassword } from 'helpers';
-import { FormNames, FormValues } from 'interfaces';
-import { useEffect } from 'react';
+import { FormNames, FormValues, InputTypes } from 'interfaces';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { ObjectShape } from 'yup/lib/object';
 
@@ -39,6 +41,7 @@ const BaseForm = ({
     onSubmit,
   });
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { dirty, handleSubmit, setFieldValue, setValues, isValid } = formik;
 
   useEffect(() => {
@@ -47,33 +50,71 @@ const BaseForm = ({
     }
   }, [prefillValues]);
 
-  const clickHandler = (): void => {
+  const generatePassWordHandler = (): void => {
     const newPassword: string = generatePassword(8);
     setFieldValue(FormNames.password, newPassword);
   };
+  const showPasswordHandler = () => setShowPassword((prevState) => !prevState);
+
   return (
     <>
       {addPrompt && <Prompt formIsDirty={dirty} />}
       <form onSubmit={handleSubmit}>
         <Grid container rowSpacing={2} direction="column" p={10}>
-          {fieldNames.map((field) => (
-            <Grid item key={field}>
-              <TextInput
-                name={field}
-                formik={formik}
-                setFormError={setFormError}
-              />
-            </Grid>
-          ))}
+          {fieldNames.map((field) => {
+            if (field === FormNames.password) {
+              return (
+                <Grid item key="password">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Box sx={{ width: '100%' }}>
+                      <TextInput
+                        name="password"
+                        formik={formik}
+                        setFormError={setFormError}
+                        inputType={
+                          !showPassword ? InputTypes.password : InputTypes.text
+                        }
+                      />
+                    </Box>
+                    <Box sx={{ ml: '-70px', mt: '7px' }}>
+                      <IconButton onClick={showPasswordHandler}>
+                        {!showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </Box>
+                  </Box>
+                </Grid>
+              );
+            }
+            return (
+              <Grid item key={field}>
+                <TextInput
+                  name={field}
+                  formik={formik}
+                  setFormError={setFormError}
+                  inputType={InputTypes.text}
+                />
+              </Grid>
+            );
+          })}
+
           {generatePasswordButton && (
             <Grid item>
               <Button
                 color="secondary"
                 size="small"
                 sx={{ textTransform: 'none' }}
-                onMouseDown={clickHandler}
+                onMouseDown={generatePassWordHandler}
               >
-                Generate password
+                Generate new password
               </Button>
             </Grid>
           )}

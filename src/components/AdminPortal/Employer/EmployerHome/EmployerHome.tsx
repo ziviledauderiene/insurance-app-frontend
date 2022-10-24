@@ -47,11 +47,20 @@ const EmployerHome = (): JSX.Element => {
     setSnackOpen(true);
     setReload((prevState) => !prevState);
   };
+  const onError = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.error);
+    setSnackOpen(true);
+  };
 
   return (
     <>
       <BasicModal label="Add new Employer">
-        <AddEmployerForm action={FormActions.add} onSuccess={onSuccess} />
+        <AddEmployerForm
+          action={FormActions.add}
+          onSuccess={onSuccess}
+          onError={onError}
+        />
       </BasicModal>
       <SearchBar
         setEmployersList={setEmployersList}

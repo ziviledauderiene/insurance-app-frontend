@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { AxiosError } from 'axios';
 import { BasicModal, ConfirmDialog, PlanYearForm } from 'components';
 import { deletePlanYear, initializePlanYear } from 'helpers';
 import {
@@ -26,6 +27,7 @@ interface PlanYearsTableProps {
   loading: boolean;
   error: string | null;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
 }
 const headCellStyles = {
   sx: {
@@ -51,6 +53,7 @@ const PlanYearsTable = ({
   loading,
   error,
   onSuccess,
+  onError,
 }: PlanYearsTableProps): JSX.Element => {
   const { employerId } = useParams();
   const [deleteDialogIsOpen, setDeleteDialogOpen] = useState<boolean>(false);
@@ -77,8 +80,14 @@ const PlanYearsTable = ({
       const response = await initializePlanYear(id);
       setInitializeDialogOpen(false);
       onSuccess(response.message);
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError && err.response?.data.friendlyMessage) {
+        onError(err.response.data.friendlyMessage);
+      } else {
+        onError(
+          'An error occurred. Please check your internet connection and try again.'
+        );
+      }
     }
   };
   const deleteHandler = async (id: string) => {
@@ -86,8 +95,14 @@ const PlanYearsTable = ({
       await deletePlanYear(id);
       setDeleteDialogOpen(false);
       onSuccess('Plan Year deleted successfully');
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError && err.response?.data.friendlyMessage) {
+        onError(err.response.data.friendlyMessage);
+      } else {
+        onError(
+          'An error occurred. Please check your internet connection and try again.'
+        );
+      }
     }
   };
 
@@ -160,6 +175,7 @@ const PlanYearsTable = ({
                         employerId={employerId}
                         planYear={planYear}
                         onSuccess={onSuccess}
+                        onError={onError}
                       />
                     </BasicModal>
                     <Button

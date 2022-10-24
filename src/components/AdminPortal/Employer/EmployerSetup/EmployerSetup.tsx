@@ -24,6 +24,11 @@ const EmployerSetup = (): JSX.Element => {
     setSeverity(AlertSeverity.success);
     setSnackOpen(true);
   };
+  const onError = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.error);
+    setSnackOpen(true);
+  };
 
   return (
     <Container>
@@ -38,6 +43,7 @@ const EmployerSetup = (): JSX.Element => {
                 <AddEmployerForm
                   action={FormActions.update}
                   onSuccess={onSuccess}
+                  onError={onError}
                 />
               </BasicModal>
             </Grid>

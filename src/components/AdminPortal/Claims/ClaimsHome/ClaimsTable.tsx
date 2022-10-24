@@ -30,17 +30,30 @@ const bodyCellStyles = (status: ClaimStatus) =>
     ? {
         sx: {
           paddingLeft: '50px',
-          '&:hover': { fontWeight: '700', cursor: 'pointer' },
+          '&:hover': {
+            fontWeight: '700',
+            cursor: 'pointer',
+            color: theme.palette.secondary,
+          },
         },
       }
     : { sx: { paddingLeft: '50px' } };
 
-const rowStyles = {
-  sx: {
-    '&:last-child td, &:last-child th': { border: 0 },
-    '&:hover': { background: theme.palette.action.hover },
-  },
-};
+const rowStyles = (status: ClaimStatus) =>
+  status === ClaimStatus.pending
+    ? {
+        sx: {
+          background: theme.palette.action.hover,
+          '&:last-child td, &:last-child th': { border: 0 },
+          '&:hover': { background: theme.palette.action.focus },
+        },
+      }
+    : {
+        sx: {
+          '&:last-child td, &:last-child th': { border: 0 },
+          '&:hover': {},
+        },
+      };
 
 const ClaimsTable = ({
   claimList,
@@ -56,6 +69,17 @@ const ClaimsTable = ({
     'Plan',
     'Status',
   ];
+
+  type Rows = keyof Omit<Claim, 'id' | 'employer'>;
+  const rowMap = {
+    claimNumber: 0,
+    amount: 1,
+    consumer: 2,
+    date: 3,
+    plan: 4,
+    status: 5,
+  };
+
   const headerList = headerTitles.map((title) => (
     <TableCell {...headCellStyles} key={title}>
       {title}
@@ -88,11 +112,29 @@ const ClaimsTable = ({
               </TableRow>
             )}
             {claimList.length > 0 &&
-              claimList.map((claim) => (
-                <TableRow key={claim.claimNumber} {...rowStyles}>
-                  {Object.values(claim)
-                    .slice(0, -1)
-                    .map((claimItem) => (
+              claimList.map((claim) => {
+                const childrenItems: string[] = [];
+                Object.keys(claim).forEach((key) => {
+                  if (key === 'id') {
+                    return;
+                  }
+                  if (key === 'date') {
+                    childrenItems[rowMap[key]] = new Date(
+                      claim[key]
+                    ).toLocaleDateString();
+                    return;
+                  }
+                  const index = rowMap[key as Rows];
+                  if (index !== undefined) {
+                    childrenItems[rowMap[key as Rows]] = claim[key as Rows];
+                  }
+                });
+                return (
+                  <TableRow
+                    key={claim.claimNumber}
+                    {...rowStyles(claim.status)}
+                  >
+                    {childrenItems.map((claimItem, index) => (
                       <TableCell
                         key={claimItem}
                         {...bodyCellStyles(claim.status)}
@@ -102,11 +144,14 @@ const ClaimsTable = ({
                           }
                         }}
                       >
-                        {claimItem}
+                        {index === 3
+                          ? new Date(claimItem).toLocaleDateString()
+                          : claimItem}
                       </TableCell>
                     ))}
-                </TableRow>
-              ))}
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>

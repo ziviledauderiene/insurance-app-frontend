@@ -12,11 +12,13 @@ import {
   addPlanYearValidationSchema,
   capitalize,
   createPlanYear,
+  getFriendlyErrorOrFallback,
   updatePlanYear,
   updatePlanYearValidationSchema,
 } from 'helpers';
 import {
   FormActions,
+  InputTypes,
   PayrollFrequency,
   Plan,
   PlanYear,
@@ -29,6 +31,7 @@ interface PlanYearFormProps {
   employerId: string | undefined;
   planYear?: PlanYear;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
   handleClose?: () => void;
 }
 const today = new Date();
@@ -47,6 +50,7 @@ const PlanYearForm = ({
   planYear,
   onSuccess,
   handleClose,
+  onError,
 }: PlanYearFormProps): JSX.Element => {
   const initialValues = planYear
     ? {
@@ -83,8 +87,8 @@ const PlanYearForm = ({
       if (handleClose) {
         handleClose();
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      onError(getFriendlyErrorOrFallback(error));
     }
   };
   const formik: FormikProps<StrictFormValues> = useFormik<StrictFormValues>({
@@ -125,7 +129,11 @@ const PlanYearForm = ({
           </Grid>
           <Grid item>
             {action === FormActions.add ? (
-              <TextInput name="name" formik={formik} />
+              <TextInput
+                name="name"
+                formik={formik}
+                inputType={InputTypes.text}
+              />
             ) : (
               <Box sx={{ display: 'flex' }}>
                 <Typography paragraph sx={{ width: '17%' }}>
@@ -152,7 +160,11 @@ const PlanYearForm = ({
             />
           </Grid>
           <Grid item>
-            <TextInput name="contributions" formik={formik} />
+            <TextInput
+              name="contributions"
+              formik={formik}
+              inputType={InputTypes.number}
+            />
           </Grid>
           <Grid item>
             <BasicSelect name="payrollFrequency" formik={formik}>

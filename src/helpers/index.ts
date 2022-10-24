@@ -16,6 +16,7 @@ import {
   updateEmployerUser,
   updatePlanYear,
 } from './api';
+import getFriendlyErrorOrFallback from './errorhandling';
 import generatePassword from './generatePassword';
 import {
   deleteFromLocalStorage,
@@ -61,4 +62,5 @@ export {
   initializePlanYear,
   updatePlanYearValidationSchema,
   updatePlanYear,
+  getFriendlyErrorOrFallback,
 };

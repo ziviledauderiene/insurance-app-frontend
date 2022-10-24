@@ -1,47 +1,30 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Card, Grid, Typography, MenuItem } from '@mui/material';
-import { SearchInput, BasicSelect } from 'components';
+import { Button, Card, Grid, MenuItem, Typography } from '@mui/material';
+import { BasicSelect, SearchInput } from 'components';
 import { FormikProps, useFormik } from 'formik';
-import { getClaims, capitalize } from 'helpers';
-import { Claim, FormValues } from 'interfaces';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { capitalize } from 'helpers';
+import { FormValues } from 'interfaces';
+import { Dispatch, useState } from 'react';
 
 const initialValues: FormValues = {
   claimNumber: '',
   status: '',
 };
 interface SearchBarProps {
-  setClaimsList: Dispatch<SetStateAction<Claim[]>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<string | null>>;
+  setSearchValues: Dispatch<React.SetStateAction<FormValues | undefined>>;
 }
 
-const SearchBar = ({
-  setClaimsList,
-  setLoading,
-  setError,
-}: SearchBarProps): JSX.Element => {
+const SearchBar = ({ setSearchValues }: SearchBarProps): JSX.Element => {
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const formik: FormikProps<FormValues> = useFormik<FormValues>({
     initialValues,
     onSubmit: async (values) => {
-      try {
-        setLoading(true);
-        setDisableButton(true);
-        setError(null);
-        const claims: Claim[] = await getClaims(values);
-        setClaimsList(claims);
-      } catch (err) {
-        setClaimsList([]);
-        setError(`Could not fetch Claims. Error: ${err}`);
-      } finally {
-        setLoading(false);
-      }
+      setSearchValues(values);
     },
   });
   const { handleSubmit } = formik;
 
-  const selectValues = ['approved', 'pending', 'denied'];
+  const selectValues = ['All Claims', 'approved', 'pending', 'denied'];
   const listMenu = selectValues.map((selectItem) => (
     <MenuItem value={selectItem} key={selectItem}>
       {capitalize(selectItem)}

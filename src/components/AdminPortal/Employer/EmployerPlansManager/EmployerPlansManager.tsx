@@ -50,6 +50,11 @@ const EmployerPlansManager = (): JSX.Element => {
     setSnackOpen(true);
     setReload((prevState) => !prevState);
   };
+  const onError = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.error);
+    setSnackOpen(true);
+  };
 
   return (
     <>
@@ -58,6 +63,7 @@ const EmployerPlansManager = (): JSX.Element => {
           action={FormActions.add}
           employerId={employerId}
           onSuccess={onSuccess}
+          onError={onError}
         />
       </BasicModal>
       <PlanYearsTable
@@ -65,6 +71,7 @@ const EmployerPlansManager = (): JSX.Element => {
         loading={loading}
         error={error}
         onSuccess={onSuccess}
+        onError={onError}
       />
       <SnackBarNote
         snackMessage={snackMessage}

@@ -20,6 +20,7 @@ interface EmployersUserProps {
   loading: boolean;
   error: string | null;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
 }
 const headCellStyles = {
   sx: {
@@ -51,6 +52,7 @@ const UsersTable = ({
   loading,
   error,
   onSuccess,
+  onError,
 }: EmployersUserProps): JSX.Element => {
   const [dialogIsOpen, setDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>(
@@ -109,6 +111,7 @@ const UsersTable = ({
                           action={FormActions.update}
                           userId={user.id}
                           onSuccess={onSuccess}
+                          onError={onError}
                         />
                       </BasicModal>
                       <IconButton

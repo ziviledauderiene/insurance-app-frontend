@@ -5,6 +5,7 @@ import { FormikHelpers } from 'formik';
 import {
   addUserValidation,
   createEmployerUser,
+  getFriendlyErrorOrFallback,
   getUser,
   updateEmployerUser,
   updateUserValidation,
@@ -18,6 +19,7 @@ interface EmployerUserFormProps {
   userId?: string;
   handleClose?: () => void;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
 }
 const initialValues: FormValues = {
   [FormNames.firstName]: '',
@@ -45,6 +47,7 @@ const EmployerUserForm = ({
   userId,
   handleClose,
   onSuccess,
+  onError,
 }: EmployerUserFormProps): JSX.Element => {
   const { employerId } = useParams();
   const [formValues, setFormValues] = useState<FormValues | undefined>(
@@ -108,6 +111,7 @@ const EmployerUserForm = ({
           `Username "${values.username}" already exists. Please choose a different one.`
         );
       }
+      onError(getFriendlyErrorOrFallback(error));
     }
   };
 

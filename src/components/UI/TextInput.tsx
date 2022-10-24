@@ -1,11 +1,12 @@
 import { TextField } from '@mui/material';
 import { FormikProps } from 'formik';
 import { capitalize } from 'helpers';
-import { FormValues } from 'interfaces';
+import { FormValues, InputTypes } from 'interfaces';
 import { ChangeEvent } from 'react';
 
 interface TextInputProps {
   name: string;
+  inputType: InputTypes;
   formik: FormikProps<FormValues>;
   setFormError?: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -14,6 +15,7 @@ const TextInput = ({
   name,
   formik,
   setFormError,
+  inputType,
 }: TextInputProps): JSX.Element => {
   const { handleBlur, handleChange, values, touched, errors } = formik;
   const changeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -35,7 +37,7 @@ const TextInput = ({
       onBlur={handleBlur}
       error={touched[name] && !!errors[name]}
       helperText={touched[name] && errors[name]}
-      type={name === 'password' ? 'password' : 'text'}
+      type={inputType}
     />
   );
 };

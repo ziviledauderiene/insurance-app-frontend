@@ -89,5 +89,5 @@ export const addUserValidation = Yup.object().shape({
   [FormNames.username]: Yup.string().required('Please enter the username'),
   [FormNames.password]: Yup.string()
     .required('Please enter the password')
-    .min(3, 'Password is too short. At least 3 chars required'),
+    .min(8, 'Password is too short. At least 8 chars required'),
 });

@@ -51,17 +51,27 @@ const EmployerUsersManager = (): JSX.Element => {
     setSnackOpen(true);
     setReload((prevState) => !prevState);
   };
+  const onError = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.error);
+    setSnackOpen(true);
+  };
 
   return (
     <Container>
       <BasicModal label="Add new User">
-        <EmployerUserForm action={FormActions.add} onSuccess={onSuccess} />
+        <EmployerUserForm
+          action={FormActions.add}
+          onSuccess={onSuccess}
+          onError={onError}
+        />
       </BasicModal>
       <UsersTable
         employersUsersList={usersList}
         loading={loading}
         error={error}
         onSuccess={onSuccess}
+        onError={onError}
       />
       <SnackBarNote
         snackMessage={snackMessage}

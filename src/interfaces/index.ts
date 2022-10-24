@@ -66,7 +66,7 @@ export enum ClaimStatus {
   approved = 'approved',
   denied = 'denied',
 }
-export interface Claim {
+export type Claim = {
   id: string;
   claimNumber: string;
   employer: string;
@@ -75,7 +75,7 @@ export interface Claim {
   plan: Plan;
   amount: string;
   status: ClaimStatus;
-}
+};
 export enum DialogAction {
   approve = 'approve',
   deny = 'deny',
@@ -123,4 +123,9 @@ export enum AlertSeverity {
   error = 'error',
   warning = 'warning',
   info = 'info',
+}
+export enum InputTypes {
+  text = 'text',
+  password = 'password',
+  number = 'number',
 }

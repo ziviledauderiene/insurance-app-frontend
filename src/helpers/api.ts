@@ -96,12 +96,18 @@ export const updateClaim = async (
   );
   return response;
 };
-export const getClaims = async (queryParams?: FormValues): Promise<Claim[]> => {
+export const getClaims = async (
+  queryParams?: FormValues,
+  page?: number
+): Promise<{
+  claims: Claim[];
+  count: number;
+}> => {
   const query = queryParams
-    ? `?claimNumber=${queryParams.claimNumber}&status=${queryParams.status}`
-    : '';
-  const { claims } = await sendRequest(`${endpoints.claims}${query}`);
-  return claims;
+    ? `?claimNumber=${queryParams.claimNumber}&status=${queryParams.status}&page=${page}`
+    : `?page=${page}`;
+  const { claims, count } = await sendRequest(`${endpoints.claims}${query}`);
+  return { claims, count };
 };
 export const getPlanYearsByEmployer = async (
   id: string

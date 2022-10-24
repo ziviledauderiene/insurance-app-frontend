@@ -74,6 +74,11 @@ const EditClaim = (): JSX.Element => {
     setSnackOpen(true);
     setReload((prevState) => !prevState);
   };
+  const onError = (message: string) => {
+    setSnackMessage(message);
+    setSeverity(AlertSeverity.error);
+    setSnackOpen(true);
+  };
   const approveHandler = () => {
     setDialogOpen(true);
     setDialogAction(DialogAction.approve);
@@ -118,7 +123,11 @@ const EditClaim = (): JSX.Element => {
                 </>
               }
             >
-              <EditClaimForm claim={claim} onSuccess={onSuccess} />
+              <EditClaimForm
+                claim={claim}
+                onSuccess={onSuccess}
+                onError={onError}
+              />
             </BasicModal>
           )}
         </Box>

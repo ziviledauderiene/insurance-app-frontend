@@ -1,14 +1,20 @@
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { Prompt, TextInput } from 'components';
 import { useFormik } from 'formik';
-import { createEmployer, getEmployer, updateEmployer } from 'helpers';
-import { FormActions, FormValues } from 'interfaces';
+import {
+  createEmployer,
+  getEmployer,
+  getFriendlyErrorOrFallback,
+  updateEmployer,
+} from 'helpers';
+import { FormActions, FormValues, InputTypes } from 'interfaces';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 interface AddEmployerFormProps {
   action: FormActions;
   onSuccess: (message: string) => void;
+  onError: (message: string) => void;
   handleClose?: () => void;
 }
 
@@ -39,6 +45,7 @@ const AddEmployerForm = ({
   action,
   onSuccess,
   handleClose,
+  onError,
 }: AddEmployerFormProps): JSX.Element => {
   const { employerId } = useParams();
 
@@ -59,8 +66,8 @@ const AddEmployerForm = ({
         handleClose();
       }
       onSuccess(message);
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      onError(getFriendlyErrorOrFallback(error));
     }
   };
   const formik = useFormik<FormValues>({
@@ -95,7 +102,11 @@ const AddEmployerForm = ({
         <Grid container rowSpacing={2} direction="column" p={10}>
           {Object.keys(initialValues).map((value) => (
             <Grid item key={value}>
-              <TextInput name={value} formik={formik} />
+              <TextInput
+                name={value}
+                formik={formik}
+                inputType={InputTypes.text}
+              />
             </Grid>
           ))}
           <Grid item mt={2}>

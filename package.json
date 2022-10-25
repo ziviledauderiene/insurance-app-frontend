@@ -33,7 +33,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts build start",
+    "start": "serve -s build",
     "start-dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

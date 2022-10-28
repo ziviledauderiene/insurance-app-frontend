@@ -1,9 +1,10 @@
 # Insurance management App
 
+Click the link to see how the app works:
 https://pot-insurance-app-fe.herokuapp.com/
 
-username: zivile
-pass: zzz
+- username: zivile
+- pass: zzz
 
 ### Functionalities:
 

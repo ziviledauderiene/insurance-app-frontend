@@ -15,6 +15,7 @@ https://pot-insurance-app-fe.herokuapp.com/
 2. Server-side pagination in "Claims" tab;
 3. Various validations (strings, enums, regex patterns, dates) in FE & BE;
 4. Access rights & Authentication;
+5. Login/logout.
 
 ### Technologies
 

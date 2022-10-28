@@ -1,6 +1,6 @@
 # Insurance management App
 
-[https://pot-insurance-app-fe.herokuapp.com/]
+https://pot-insurance-app-fe.herokuapp.com/
 
 username: zivile
 pass: zzz
@@ -35,4 +35,4 @@ BE:
 - Joi.
 
 Link to BE repo:
-[https://github.com/ziviledauderiene/insurance-app-backend]
+https://github.com/ziviledauderiene/insurance-app-backend

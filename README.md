@@ -8,14 +8,15 @@ https://pot-insurance-app-fe.herokuapp.com/
 
 ### Functionalities:
 
-1. Ability to manage (create, delete, update):
+1. Login/Logout;
+2. Ability to manage (create, delete, update):
    - Employers;
    - Employer users;
    - Claims, submitted by the customer.
-2. Server-side pagination in "Claims" tab;
-3. Various validations (strings, enums, regex patterns, dates) in FE & BE;
-4. Access rights & Authentication;
-5. Login/logout.
+3. Filtering;
+4. Server-side pagination in "Claims" tab;
+5. Various validations (strings, enums, regex patterns, dates, etc.) on FE & BE;
+6. Access rights & Authentication;
 
 ### Technologies
 

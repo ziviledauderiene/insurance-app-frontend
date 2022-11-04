@@ -5,7 +5,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { FormikProps } from 'formik';
-import { capitalize } from 'helpers';
+import { capitalize, replaceCamelWithSpaces } from 'helpers';
 import { StrictFormValues } from 'interfaces';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -27,7 +27,9 @@ const BasicSelect = ({
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="selectBoxName">{capitalize(name)}</InputLabel>
+      <InputLabel id="selectBoxName">
+        {capitalize(replaceCamelWithSpaces(name))}
+      </InputLabel>
       <Select
         labelId="selectBoxName"
         name={name}

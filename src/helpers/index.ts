@@ -24,7 +24,11 @@ import {
   saveInLocalStorage,
 } from './localStorage';
 import sendRequest from './sendRequest';
-import { capitalize, checkIfOnlyNumbers } from './strings';
+import {
+  capitalize,
+  checkIfOnlyNumbers,
+  replaceCamelWithSpaces,
+} from './strings';
 import {
   addPlanYearValidationSchema,
   addUserValidation,
@@ -63,4 +67,5 @@ export {
   updatePlanYearValidationSchema,
   updatePlanYear,
   getFriendlyErrorOrFallback,
+  replaceCamelWithSpaces,
 };

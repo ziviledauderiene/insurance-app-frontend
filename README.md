@@ -28,6 +28,7 @@ FE:
 - Context;
 - Material UI;
 - Formik & Yup.
+- Jest & React Testing Library
 
 BE:
 
@@ -37,5 +38,5 @@ BE:
 - Jwt;
 - Joi.
 
-Link to BE repo:
+Link to the BE repo:
 https://github.com/ziviledauderiene/insurance-app-backend

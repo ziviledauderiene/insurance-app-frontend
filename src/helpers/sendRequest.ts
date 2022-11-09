@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getFromLocalStorage } from 'helpers';
 
-const baseUrl: string = process.env.REACT_APP_PI_URL as string;
+const baseUrl: string = process.env.REACT_APP_API_URL as string;
 // const port: string = process.env.REACT_APP_PORT || '8888';
 
 const instance: AxiosInstance = axios.create({
